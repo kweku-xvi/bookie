@@ -55,12 +55,12 @@ def verify_user_view(request):
         else:
             return HttpResponse('<h1>Email already verified</h1>')
     except jwt.ExpiredSignatureError:
-        return HttpResponse('Activation link expired')
+        return HttpResponse('<h1>Activation link expired</h1>')
     except jwt.DecodeError:
-        return HttpResponse('Invalid token')
+        return HttpResponse('<h1>Invalid token</h1>')
     except jwt.InvalidTokenError:
-        return HttpResponse('Invalid token')
+        return HttpResponse('<h1>Invalid token</h1>')
     except User.DoesNotExist:
-        return HttpResponse('User does not exist')
+        return HttpResponse('<h1>User does not exist</h1>')
     except Exception as e:
-        return HttpResponse(f'Error: {str(e)}')
+        return HttpResponse(f'<h1>Error: {str(e)}</h1>')
