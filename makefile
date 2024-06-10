@@ -6,4 +6,4 @@ mm:
 
 m:
 	@python manage.py migrate
-
+	
