@@ -15,7 +15,7 @@ load_dotenv()
 
 
 def home(request):
-    return render(request, 'accounts/home.html')
+    return render(request, 'accounts/home.html', {'title':'Home'})
 
 
 def sign_up_view(request):
