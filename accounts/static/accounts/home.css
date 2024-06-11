@@ -1,0 +1,78 @@
+body {
+    background-color: #FAFAFA;
+}
+
+/* EVENTS SECTION */
+.filter-btn {
+    background-color: #FFFFFF;
+    border: 1px solid #ced4da;
+    margin-right: 0.25rem;
+}
+
+.event-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.bookmark-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+a {
+    color: black;
+}
+
+/* TOP SECTION WITH BANNER */
+.promo-section {
+    background-color: #d7f5f5;
+    text-align: center;
+    padding: 80px 20px;
+    position: relative;
+    min-height: 400px;
+}
+
+.promo-section .btn-create-event {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.25rem;
+}
+
+.promo-section .btn-create-event:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.diamond {
+    width: 50px;
+    height: 50px;
+    background-color: #4a90e2;
+    position: absolute;
+    transform: rotate(45deg);
+}
+
+.diamond.small {
+    width: 30px;
+    height: 30px;
+}
+
+.diamond.top-right {
+    top: 10%;
+    right: 5%;
+}
+
+.diamond.bottom-right {
+    bottom: 10%;
+    right: 10%;
+}
+
+.diamond.bottom-left {
+    bottom: 15%;
+    left: 5%;
+}
