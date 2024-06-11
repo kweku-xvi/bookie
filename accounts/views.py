@@ -1,9 +1,10 @@
 import os, jwt
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from .models import User
 from .utils import send_mail_verification
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -64,3 +65,28 @@ def verify_user_view(request):
         return HttpResponse('<h1>User does not exist</h1>')
     except Exception as e:
         return HttpResponse(f'<h1>Error: {str(e)}</h1>')
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+
+            messages.success(request, f'Your account has been successfully updated!')
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    context = {
+        'title':'Profile',
+        'u_form':u_form,
+        'p_form':p_form
+    }
+
+    return render(request, 'accounts/profile.html', context)
