@@ -3,6 +3,7 @@ from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from .models import User
 from .utils import send_mail_verification
 from django.conf import settings
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
@@ -10,13 +11,24 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from dotenv import load_dotenv
+from programs.models import Event
 
 
 load_dotenv()
 
 
 def home(request):
-    return render(request, 'accounts/home.html', {'title':'Home'})
+    events_list = Event.objects.all()
+    paginator = Paginator(events_list, 8)
+
+    page_number = request.GET.get('page')
+    events = paginator.get_page(page_number)
+
+    context = {
+        'events':events, 
+        'title':'Home'
+    }
+    return render(request, 'accounts/home.html', context)
 
 
 def sign_up_view(request):
@@ -34,6 +46,7 @@ def sign_up_view(request):
             link = str(absolute_url)
             send_mail_verification(username=user.username, email=user.email, link=link)
 
+            messages.success(request, f'Your account has been created! Please verify your email and log in.')
             return redirect('login')
     else:
         form = UserRegistrationForm()
