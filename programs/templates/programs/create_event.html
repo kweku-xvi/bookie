@@ -1,0 +1,54 @@
+{% extends 'accounts/base.html' %}
+{% load form_tags %}
+
+{% block promo %}
+    <div class="promo-section-2">
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 1%;"></div>
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 99%;"></div>
+        
+    </div>
+{% endblock promo %}
+
+{% block content %}
+    <h1 class="text-center mt-5">Create Online Event</h1>
+
+
+    <div class="container mt-5 col-lg-7 create_body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Event Name</label>
+                {{ form.name|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_description">Short Description</label>
+                {{ form.short_description|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_description">Description</label>
+                {{ form.description|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_category">Category</label>
+                {{ form.category|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_event_date">Event Date</label>
+                {{ form.event_date|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_start_time">Start Time</label>
+                {{ form.start_time|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_end_time">End Time</label>
+                {{ form.end_time|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="id_image">Image</label>
+                {{ form.image|add_class:"form-control-file" }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock content %}
