@@ -29,6 +29,7 @@ class Event(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     image = models.ImageField(default='default.jpg', upload_to='event_images')
+    is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

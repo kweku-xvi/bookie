@@ -10,16 +10,14 @@
 {% endblock promo %}
 
 {% block content %}
-    <h1 class="text-center mt-5">Create Online Event</h1>
-
+    <h1 class="text-center mt-5">Tickets</h1>
 
     <div class="container mt-5 col-lg-7 create_body">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group">
-                {{ form|crispy }}
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary" name="save" value="Save">Save</button>
+            <button type="submit" name="save_add_another" value="Save and Add Another" class="btn btn-secondary">Save & Add Another</button>
         </form>
     </div>
 {% endblock content %}

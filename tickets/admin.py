@@ -1,3 +1,9 @@
+from .models import Ticket
 from django.contrib import admin
 
-# Register your models here.
+
+class TicketAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'price', 'quantity')
+    readonly_fields = ('created_at',)
+
+admin.site.register(Ticket, TicketAdmin)

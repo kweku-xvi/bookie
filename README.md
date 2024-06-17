@@ -1,1 +1,3 @@
 # Bookie
+
+🚧 EVENT DETAILS VIEW
