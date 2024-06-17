@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'accounts',
     'crispy_bootstrap4',
     'crispy_forms',
+    'programs',
+    'tickets',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
