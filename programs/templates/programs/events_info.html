@@ -49,7 +49,7 @@
                             <div>
                                 <small>Organised by</small> <br>
                                 <strong>{{ event.organized_by.first_name }} {{ event.organized_by.last_name }}</strong><br>
-                                <a href="#" class="green-links">View Profile</a>
+                                <a href="{% url 'event_organizer' event.organized_by.id %}" class="green-links">View Profile</a>
                             </div>
                         </div>
                         <div class="event-info">

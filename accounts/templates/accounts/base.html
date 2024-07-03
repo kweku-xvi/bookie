@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{% static 'accounts/profile.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'accounts/event.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'accounts/events_info.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'accounts/organizer_profile.css' %}" type="text/css">
 </head>
 
 <body>
@@ -27,7 +28,7 @@
     <header class="site-header">
         <nav class="navbar navbar-light navbar-expand-lg fixed-top" style="background-color: #ffffff;">
             <span class="navbar-brand" href="#">
-                <img src="../../static/images/bookie_logo.png" width="30" height="30" class="d-inline-block align-top"
+                <img src="{% static 'images/bookie_logo.png' %}" width="30" height="30" class="d-inline-block align-top"
                     alt="">
                 Bookie
             </span>
