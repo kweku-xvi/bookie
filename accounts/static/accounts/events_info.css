@@ -1,0 +1,89 @@
+.ft-fam {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.event-date {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.event-image {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.event-details {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.event-details .card {
+    border: none;
+    background-color: #f8f9fa;
+}
+
+.countdown {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.date-card {
+    display: inline-block;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    width: 80px;
+    font-family: Arial, sans-serif;
+}
+
+.date-card .month {
+    background-color: #4CAF50;
+    /* Green background for the month */
+    color: white;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.date-card .day {
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.event-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.event-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.event-info i {
+    margin-right: 10px;
+}
+
+.green-links {
+    color: green;
+}

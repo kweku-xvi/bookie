@@ -1,0 +1,80 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block promo %}
+    <div class="promo-section-2">
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 1%;"></div>
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 99%;"></div>      
+    </div>
+{% endblock promo %}
+
+{% block content %}
+    <div class="ft-fam">
+        <div class="container">
+            <div class="row">
+                <!-- Event Details Section -->
+                <div class="container mt-5">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="date-card">
+                                <div class="month"> {{ event.event_date|date:'M' }}</div>
+                                <div class="day">{{ event.event_date|date:'d' }}</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h1 class="mb-0">{{ event.name }}</h1>
+                            <p class="mb-3"><i class="fas fa-map-marker-alt"></i> <strong>Venue: </strong> {{ event.venue }} &bull; <strong>Starts at: </strong> {{  event.start_time|date:'h:i A' }} &bull; <strong>Ends at: </strong> {{  event.end_time|date:'h:i A' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-image mt-5 mb-3">
+                    <div class="mt-4">
+                        <strong>About This Event</strong>
+                        <p>{{ event.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-md-4 mt-4">
+                    <div class="event-card" style="background-color: #ffffff;">
+                        <div>
+                            <h5> <strong>Event Details</strong></h5>
+                            <hr>
+                        </div>
+                        <div class="event-info">
+                            <i class="icon"><img class="img-fluid rounded mb-4" loading="lazy" src="../../static/images/green-profile-icon.png"
+                                width="245" height="80" alt="Event Organizer"></i>
+                            <div>
+                                <small>Organised by</small> <br>
+                                <strong>{{ event.organized_by.first_name }} {{ event.organized_by.last_name }}</strong><br>
+                                <a href="#" class="green-links">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <i class="icon"><img class="img-fluid rounded mb-4" loading="lazy" src="../../static/images/green-calendar-icon.png"
+                                width="245" height="80" alt="Event Date"></i>
+                            <div>
+                                <small>Date and Time</small><br>
+                                <strong>{{ event.event_date }}, {{ event.start_time|date:'h:i A' }}</strong><br>
+                                <a href="#" class="green-links">Add to Calendar</a>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <i class="icon"><img class="img-fluid rounded mb-4" loading="lazy" src="../../static/images/green-location-icon.png"
+                                width="245" height="80" alt="Event Location"></i>
+                            <div>
+                                <small>Venue</small><br>
+                                <strong>{{ event.venue }}</strong><br>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <a href="#" class="btn btn-success" style="width: 90%;">Book Now</a>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

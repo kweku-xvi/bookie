@@ -17,6 +17,7 @@ from programs.models import Event
 load_dotenv()
 
 
+@login_required
 def home(request):
     events_list = Event.objects.all()
     paginator = Paginator(events_list, 8)

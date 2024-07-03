@@ -76,3 +76,12 @@ a {
     bottom: 15%;
     left: 5%;
 }
+
+/* EVENTS INFO */
+.event-image {
+    width: 100%;
+    height: auto;
+}
+.countdown {
+    font-size: 1.5rem;
+}

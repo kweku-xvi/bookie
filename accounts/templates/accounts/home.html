@@ -4,7 +4,7 @@
     <div class="promo-section">
         <h2 class="font-weight-bold mt-4">The Easiest and Most Powerful Online Event</h2>
         <h2 class="font-weight-bold">Booking and Ticketing System</h2>
-        <h5 class="mt-5">Barren is an all-in-one event ticketing platform for event organisers,</h5>
+        <h5 class="mt-5">Bookie is an all-in-one event ticketing platform for event organisers,</h5>
         <h5>promoters, and managers. Easily create, promote and manage</h5>
         <h5 class="mb-3">your events of any type and size.</h5>
         <a href="{% url 'create_event' %}" class="btn btn-create-event">Create Event →</a>
@@ -55,9 +55,9 @@
                         <div class="card event-card h-100">
                             <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ event.name }}</h5>
+                                <h5 class="card-title"> <a href="{% url 'events_info' event.id %}">{{ event.name }}</a></h5>
                                 <p class="card-text description">{{ event.short_description }}</p>
-                                <p class="card-text">{{ event.event_date }} at {{ event.start_time }}</p>
+                                <p class="card-text">{{ event.event_date }} at {{ event.start_time|date:'h:i A' }}</p>
                             </div>
                         </div>
                     </div>

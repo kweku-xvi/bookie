@@ -3,7 +3,7 @@ from django.contrib import admin
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'event_date', 'start_time')
+    list_display = ('id', 'name', 'venue', 'event_date', 'start_time')
     readonly_fields = ('created_at',)
 
 

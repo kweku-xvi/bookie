@@ -24,12 +24,14 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     short_description = models.CharField(max_length=200)
     description = models.TextField()
+    venue = models.CharField(max_length=255)
     category= models.CharField(max_length=50, choices=EVENT_CATEGORIES, default='Others')
     event_date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     image = models.ImageField(default='default.jpg', upload_to='event_images')
     is_active = models.BooleanField(default=False)
+    organized_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
