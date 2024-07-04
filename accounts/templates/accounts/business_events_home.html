@@ -34,9 +34,9 @@
         </div> -->
 
         <div class="btn-group mb-3" role="group" aria-label="Filter by category">
-            <a class="btn btn-primary mr-1" href="{% url 'home' %}">All</a>
+            <a class="btn filter-btn" href="{% url 'home' %}">All</a>
             <a class="btn filter-btn" href="{% url 'filter_events_by_arts' %}">Arts</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_business' %}">Business</a>
+            <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_business' %}">Business</a>
             <a class="btn filter-btn" href="{% url 'filter_events_by_concert' %}">Concert</a>
             <a class="btn filter-btn" href="{% url 'filter_events_by_education' %}">Education</a>
             <a class="btn filter-btn" href="{% url 'filter_events_by_fashion' %}">Fashion</a>

@@ -5,18 +5,17 @@ from django.db import models
 
 class Event(models.Model):
     EVENT_CATEGORIES = [
-        ('Arts', 'Arts'),
-        ('Business', 'Business'),
-        ('Enterpreneurship', 'Enterpreneurship'),
-        ('Education', 'Education'),
-        ('Fashion', 'Fashion'),
-        ('Film', 'Film'),
-        ('Food', 'Food'),
-        ('Politics', 'Politics'), 
-        ('Health', 'Health'),
-        ('Music', 'Music'),
-        ('Science & Technology', 'Science & Technology'),
-        ('Others', 'Others')
+        ('arts', 'Arts'),
+        ('business', 'Business'),
+        ('concert', 'Concert'),
+        ('education', 'Education'),
+        ('fashion', 'Fashion'),
+        ('film', 'Film'),
+        ('health', 'Health'),
+        ('music', 'Music'),
+        ('politics', 'Politics'), 
+        ('scienceandtechnology', 'Science & Technology'),
+        ('others', 'Others')
     ]
 
 
