@@ -1,0 +1,97 @@
+{% extends 'accounts/base.html' %}
+
+{% block promo %}
+    <div class="promo-section">
+        <h2 class="font-weight-bold mt-4">The Easiest and Most Powerful Online Event</h2>
+        <h2 class="font-weight-bold">Booking and Ticketing System</h2>
+        <h5 class="mt-5">Bookie is an all-in-one event ticketing platform for event organisers,</h5>
+        <h5>promoters, and managers. Easily create, promote and manage</h5>
+        <h5 class="mb-3">your events of any type and size.</h5>
+        <a href="{% url 'create_event' %}" class="btn btn-create-event">Create Event →</a>
+        
+        <!-- Diamond decorations -->
+        <div class="diamond top-right"></div>
+        <div class="diamond small bottom-right"></div>
+        <div class="diamond small bottom-left"></div>
+    </div>
+{% endblock promo %}
+
+{% block content %}
+    <div class="container mt-4">
+
+        {% if results %}
+        <h1 class="mb-4">Search Results for "{{ query }}"</h1>
+            <div class="container">
+                {% for event in results %}
+                    {% if forloop.counter0|divisibleby:4 %}
+                        <div class="row">
+                    {% endif %}
+                        <div class="col-md-3 mb-4">
+                            <div class="card event-card h-100">
+                                <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}">
+                                <div class="card-body">
+                                    <h5 class="card-title"> <a href="{% url 'events_info' event.id %}">{{ event.name }}</a></h5>
+                                    <p class="card-text description">{{ event.short_description }}</p>
+                                    <p class="card-text">{{ event.event_date }} at {{ event.start_time|date:'h:i A' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if results.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">First</span>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ results.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">Previous</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+        
+                    {% for num in results.paginator.page_range %}
+                        {% if results.number == num %}
+                            <li class="page-item active">
+                                <a class="page-link" href="#">{{ num }}</a>
+                            </li>
+                        {% elif num > results.number|add:-3 and num < results.number|add:3 %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+        
+                    {% if results.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ results.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">Next</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ results.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">Last</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% else %}
+            <h1 class="mb-4"> No events found matching your search query.</h1>
+        {% endif %}     
+    </div>
+
+    
+
+{% endblock content %}
