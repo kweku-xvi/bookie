@@ -21,7 +21,7 @@ class Event(models.Model):
 
 
     id = models.CharField(max_length=9, primary_key=True, unique=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=200)
     description = models.TextField()
     venue = models.CharField(max_length=255)

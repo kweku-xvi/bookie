@@ -2,6 +2,7 @@ import os, jwt
 from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from .models import User
 from .utils import send_mail_verification
+from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -11,6 +12,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.timezone import now
 from dotenv import load_dotenv
 from programs.models import Event
 
@@ -18,24 +20,9 @@ from programs.models import Event
 load_dotenv()
 
 
-def filter_events_by_category(request, category:str):
-    events_list = Event.objects.filter(category=category)
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-    
-    return context
-
-
 @login_required
 def home(request):
-    events_list = Event.objects.all()
+    events_list = Event.objects.filter(is_active=True)
     paginator = Paginator(events_list, 8)
 
     page_number = request.GET.get('page')
@@ -122,71 +109,99 @@ def profile(request):
     return render(request, 'accounts/profile.html', context)
 
 
-@login_required
-def filter_home_by_art_events_view(request):
-    context = filter_events_by_category(request, 'arts')
+def filter_event_by_arts_and_date(request, date_filter):
+    today = now().date()
+    events = Event.objects.filter(category='arts')
 
-    return render(request, 'accounts/arts_events_home.html', context)
+    if date_filter == 'today':
+        events = events.filter(event_date=today)
+    elif date_filter == 'tomorrow':
+        tomorrow = today + timedelta(days=1)
+        events = events.filter(event_date=tomorrow)
+    elif date_filter == 'next_week':
+        next_week = today + timedelta(weeks=1)
+        events = events.filter(event_date__gte=today, event_date__lt=next_week)
+    elif date_filter == 'next_month':
+        next_month = today + timedelta(days=30)
+        events = events.filter(event_date__gte=today, event_date__lt=next_month)
+    elif date_filter == 'this_year':
+        end_of_year = datetime(today.year, 12, 31).date()
+        events = events.filter(event_date__gte=today, event_date__lte=end_of_year)
 
-
-@login_required
-def filter_home_by_business_events_view(request):
-    context = filter_events_by_category(request, 'business')
-
-    return render(request, 'accounts/business_events_home.html', context)
-
-
-@login_required
-def filter_home_by_concert_events_view(request):
-    context = filter_events_by_category(request, 'concert')
-
-    return render(request, 'accounts/concert_events_home.html', context)
-
-
-@login_required
-def filter_home_by_education_events_view(request):
-    context = filter_events_by_category(request, 'education')
-
-    return render(request, 'accounts/education_events_home.html', context)
+    return render(request, 'accounts/filter_by_date_and_category.html', {
+        'events': events,
+        'current_category': 'arts',
+        'current_date_filter': date_filter
+    })
 
 
-@login_required
-def filter_home_by_fashion_events_view(request):
-    context = filter_events_by_category(request, 'fashion')
+def filter_events_by_date_view(request, date_filter:str):
+    today = now().date()
+    events = Event.objects.filter(is_active=True)
 
-    return render(request, 'accounts/fashion_events_home.html', context)
+    if date_filter == 'today':
+        events = events.filter(event_date=today)
+    elif date_filter == 'tomorrow':
+        tomorrow = today + timedelta(days=1)
+        events = events.filter(event_date=tomorrow)
+    elif date_filter == 'next_week':
+        next_week = today + timedelta(days=7)
+        events = events.filter(event_date__gte=today, event_date__lte=next_week)
+    elif date_filter == 'next_month':
+        next_month = today + timedelta(days=30)
+        events = events.filter(event_date__gte=today, event_date__lte=next_month)
+    elif date_filter == 'this_year':
+        end_of_year = datetime(today.year, 12, 31).date()
+        events = events.filter(event_date__gte=today, event_date__lte=end_of_year)
 
+    paginator = Paginator(events, 8)
+    page_number = request.GET.get('page')
+    events = paginator.get_page(page_number)
 
-@login_required
-def filter_home_by_film_events_view(request):
-    context = filter_events_by_category(request, 'film')
+    context = {
+        'title':'Home',
+        'events':events,
+        'current_date_filter':date_filter
+    }
 
-    return render(request, 'accounts/film_events_home.html', context)
-
-
-@login_required
-def filter_home_by_music_events_view(request):
-    context = filter_events_by_category(request, 'music')
-
-    return render(request, 'accounts/music_events_home.html', context)
-
-
-@login_required
-def filter_home_by_politics_events_view(request):
-    context = filter_events_by_category(request, 'politics')
-
-    return render(request, 'accounts/politics_events_home.html', context)
-
-
-@login_required
-def filter_home_by_science_events_view(request):
-    context = filter_events_by_category(request, 'scienceandtechnology')
-
-    return render(request, 'accounts/science_events_home.html', context)
+    return render(request, 'accounts/filter_events_by_date.html', context)
 
 
-@login_required
-def filter_home_by_others_events_view(request):
-    context = filter_events_by_category(request, 'others')
+def filter_events_by_category(request, category:str):
+    events = Event.objects.filter(is_active=True)
 
-    return render(request, 'accounts/others_events_home.html', context)
+    if category == 'arts':
+        events = events.filter(category='arts')
+    elif category == 'business':
+        events = events.filter(category='business')
+    elif category == 'concert':
+        events = events.filter(category='concert')
+    elif category == 'education':
+        events = events.filter(category='education')
+    elif category == 'fashion':
+        events = events.filter(category='fashion')
+    elif category == 'film':
+        events = events.filter(category='film')
+    elif category == 'health':
+        events = events.filter(category='health')
+    elif category == 'music':
+        events = events.filter(category='music')
+    elif category == 'politics':
+        events = events.filter(category='politics')
+    elif category == 'scienceandtechnology':
+        events = events.filter(category='scienceandtechnology')
+    elif category == 'others':
+        events = events.filter(category='others')
+
+
+    paginator = Paginator(events, 8)
+    page_number = request.GET.get('page')
+    events = paginator.get_page(page_number)
+
+    context = {
+        'events':events, 
+        'title':'Home',
+        'category':category,
+    }
+    
+    return render(request, 'accounts/filter_events_by_category.html', context)

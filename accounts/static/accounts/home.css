@@ -9,6 +9,12 @@ body {
     margin-right: 0.25rem;
 }
 
+.filter-btn-active {
+    background-color: #FFFFFF;
+    border: 1px solid #ced4da;
+    margin-right: 0.25rem;
+}
+
 .event-card {
     position: relative;
     overflow: hidden;

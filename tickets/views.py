@@ -21,11 +21,19 @@ def add_ticket_view(request, event_id: str):
                     
             if 'save' in request.POST:
                 ticket.save()
+                
+                event.is_active = True
+                event.save()
+
                 messages.success(request, f'Ticket type saved successfully')
                 return redirect('home')
 
             elif 'save_add_another' in request.POST:
                 ticket.save()
+
+                event.is_active = True
+                event.save()
+
                 messages.success(request, f'Ticket saved! You can add another')
                 return redirect(reverse('add_ticket', args=[event.id]))
     else:
