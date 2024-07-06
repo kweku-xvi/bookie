@@ -18,6 +18,21 @@ from programs.models import Event
 load_dotenv()
 
 
+def filter_events_by_category(request, category:str):
+    events_list = Event.objects.filter(category=category)
+    paginator = Paginator(events_list, 8)
+
+    page_number = request.GET.get('page')
+    events = paginator.get_page(page_number)
+
+    context = {
+        'events':events, 
+        'title':'Home'
+    }
+    
+    return context
+
+
 @login_required
 def home(request):
     events_list = Event.objects.all()
@@ -31,162 +46,6 @@ def home(request):
         'title':'Home'
     }
     return render(request, 'accounts/home.html', context)
-
-
-@login_required
-def filter_home_by_art_events_view(request):
-    events_list = Event.objects.filter(category='arts')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-    return render(request, 'accounts/arts_events_home.html', context)
-
-
-@login_required
-def filter_home_by_business_events_view(request):
-    events_list = Event.objects.filter(category='business')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-    return render(request, 'accounts/business_events_home.html', context)
-
-@login_required
-def filter_home_by_concert_events_view(request):
-    events_list = Event.objects.filter(category='concert')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-    return render(request, 'accounts/concert_events_home.html', context)
-
-
-@login_required
-def filter_home_by_education_events_view(request):
-    events_list = Event.objects.filter(category='education')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/education_events_home.html', context)
-
-
-@login_required
-def filter_home_by_fashion_events_view(request):
-    events_list = Event.objects.filter(category='fashion')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/fashion_events_home.html', context)
-
-
-@login_required
-def filter_home_by_film_events_view(request):
-    events_list = Event.objects.filter(category='film')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/film_events_home.html', context)
-
-
-@login_required
-def filter_home_by_music_events_view(request):
-    events_list = Event.objects.filter(category='music')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/music_events_home.html', context)
-
-
-@login_required
-def filter_home_by_politics_events_view(request):
-    events_list = Event.objects.filter(category='politics')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/politics_events_home.html', context)
-
-
-@login_required
-def filter_home_by_science_events_view(request):
-    events_list = Event.objects.filter(category='scienceandtechnology')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/science_events_home.html', context)
-
-
-@login_required
-def filter_home_by_others_events_view(request):
-    events_list = Event.objects.filter(category='others')
-    paginator = Paginator(events_list, 8)
-
-    page_number = request.GET.get('page')
-    events = paginator.get_page(page_number)
-
-    context = {
-        'events':events, 
-        'title':'Home'
-    }
-
-    return render(request, 'accounts/others_events_home.html', context)
 
 
 def sign_up_view(request):
@@ -261,3 +120,73 @@ def profile(request):
     }
 
     return render(request, 'accounts/profile.html', context)
+
+
+@login_required
+def filter_home_by_art_events_view(request):
+    context = filter_events_by_category(request, 'arts')
+
+    return render(request, 'accounts/arts_events_home.html', context)
+
+
+@login_required
+def filter_home_by_business_events_view(request):
+    context = filter_events_by_category(request, 'business')
+
+    return render(request, 'accounts/business_events_home.html', context)
+
+
+@login_required
+def filter_home_by_concert_events_view(request):
+    context = filter_events_by_category(request, 'concert')
+
+    return render(request, 'accounts/concert_events_home.html', context)
+
+
+@login_required
+def filter_home_by_education_events_view(request):
+    context = filter_events_by_category(request, 'education')
+
+    return render(request, 'accounts/education_events_home.html', context)
+
+
+@login_required
+def filter_home_by_fashion_events_view(request):
+    context = filter_events_by_category(request, 'fashion')
+
+    return render(request, 'accounts/fashion_events_home.html', context)
+
+
+@login_required
+def filter_home_by_film_events_view(request):
+    context = filter_events_by_category(request, 'film')
+
+    return render(request, 'accounts/film_events_home.html', context)
+
+
+@login_required
+def filter_home_by_music_events_view(request):
+    context = filter_events_by_category(request, 'music')
+
+    return render(request, 'accounts/music_events_home.html', context)
+
+
+@login_required
+def filter_home_by_politics_events_view(request):
+    context = filter_events_by_category(request, 'politics')
+
+    return render(request, 'accounts/politics_events_home.html', context)
+
+
+@login_required
+def filter_home_by_science_events_view(request):
+    context = filter_events_by_category(request, 'scienceandtechnology')
+
+    return render(request, 'accounts/science_events_home.html', context)
+
+
+@login_required
+def filter_home_by_others_events_view(request):
+    context = filter_events_by_category(request, 'others')
+
+    return render(request, 'accounts/others_events_home.html', context)

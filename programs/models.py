@@ -1,6 +1,7 @@
 import uuid
 from accounts.models import User
 from django.db import models
+from PIL import Image
 
 
 class Event(models.Model):
@@ -42,6 +43,7 @@ class Event(models.Model):
         if not self.id:
             self.id = 'ev-' + str(uuid.uuid4())[:6]
         super().save(*args, **kwargs)
+
 
     
     class Meta:

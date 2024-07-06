@@ -45,7 +45,6 @@
             <a class="btn filter-btn" href="{% url 'filter_events_by_politics' %}">Politics</a>
             <a class="btn filter-btn" href="{% url 'filter_events_by_science' %}">Science & Technology</a>
             <a class="btn filter-btn" href="{% url 'filter_events_by_others' %}">Others</a>
-            <a class="btn btn-success" href="{% url 'filter_events_by_others' %}">Free</a>
         </div>
 
         <div class="container">
@@ -53,21 +52,24 @@
                 {% if forloop.counter0|divisibleby:4 %}
                     <div class="row">
                 {% endif %}
-                    <div class="col-md-3 mb-4">
-                        <div class="card event-card h-100">
-                            <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title"> <a href="{% url 'events_info' event.id %}">{{ event.name }}</a></h5>
-                                <p class="card-text description">{{ event.short_description }}</p>
-                                <p class="card-text">{{ event.event_date }} at {{ event.start_time|date:'h:i A' }}</p>
-                            </div>
+                    <div class="card mr-4" style="width: 15rem;">
+                        <img src="{{ event.image.url }}" alt="{{ event.name }}" class="card-img-top" style="height: 15rem; width: 240px;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'events_info' event.id %}">{{ event.name }}</a>
+                            </h5>
+                            <p class="card-text">{{ event.short_description }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <p class="card-text">On {{ event.event_date }} at {{ event.start_time|date:'h:i A'}}</p>
                         </div>
                     </div>
                 {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
                     </div>
                 {% endif %}
             {% endfor %}
-        </div>   
+        </div>
+         
         <nav aria-label="Page navigation" class="mt-5">
             <ul class="pagination justify-content-center">
                 {% if events.has_previous %}

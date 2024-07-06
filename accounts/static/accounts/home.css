@@ -80,8 +80,5 @@ a {
 /* EVENTS INFO */
 .event-image {
     width: 100%;
-    height: auto;
-}
-.countdown {
-    font-size: 1.5rem;
+    height: 100%;
 }
