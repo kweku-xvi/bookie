@@ -115,83 +115,9 @@
                 </div>
                 <div class="col-md-8">
                     <nav class="nav nav-pills nav-fill mb-4 bg-white rounded">
-                        <a class="nav-item nav-link active" href="{% url 'event_organizer' organizer.id  %}">About</a>
-                        <a class="nav-item nav-link" href="{% url 'event_organized_by_user' organizer.id %}">Organised Events</a>
+                        <a class="nav-item nav-link" href="{% url 'event_organizer' organizer.id  %}">About</a>
+                        <a class="nav-item nav-link active" href="{% url 'event_organized_by_user' organizer.id %}">Organised Events</a>
                     </nav>
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">First Name</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{ organizer.first_name }}
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Last Name</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{ organizer.last_name }}
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">About</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{ organizer.profile.about }}
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{ organizer.email }}
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Phone</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{ organizer.profile.phone }}
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Mobile</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{ organizer.profile.mobile }}
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Postal Address</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          {{organizer.profile.postal_address}}
-                        </div>
-                      </div>
-                    {% if user == organizer %}
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a class="btn btn-info" href="{% url 'update_profile' %}">Edit Information</a>
-                            </div>
-                        </div>
-                    {% endif %}
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

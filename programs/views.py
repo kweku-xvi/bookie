@@ -44,20 +44,31 @@ def events_info_view(request, event_id:str):
 
 
 def organizer_profile_view(request, id:str):
-    user = User.objects.get(id=id)
-    events = Event.objects.filter(organized_by=user)
+    organizer = User.objects.get(id=id)
+
+    context = {
+        'title':organizer.username,
+        'organizer':organizer,
+    }
+
+    return render(request, 'programs/organizer_profile.html', context)
+
+
+def events_organized_by_user_view(request, id:str):
+    organizer = User.objects.get(id=id)
+    events = Event.objects.filter(is_active=True, organized_by=organizer)
 
     paginator = Paginator(events, 8)
     page_number = request.GET.get('page')
     events = paginator.get_page(page_number)
 
     context = {
-        'title':user.username,
-        'user':user, 
-        'events':events
+        'title':f"Events - {organizer.first_name} {organizer.last_name}",
+        'events':events,
+        'organizer':organizer
     }
 
-    return render(request, 'programs/organizer_profile.html', context)
+    return render(request, 'programs/organized_events.html', context)
 
 
 def search_events_view(request):

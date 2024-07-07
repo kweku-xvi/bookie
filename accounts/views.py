@@ -101,7 +101,7 @@ def update_profile(request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
     
     context = {
-        'title':'Profile',
+        'title':'Update Profile',
         'u_form':u_form,
         'p_form':p_form
     }

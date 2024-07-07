@@ -59,6 +59,14 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    about = models.CharField(max_length=250, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    mobile = models.CharField(max_length=15, null=True, blank=True)
+    postal_address = models.CharField(max_length=100, blank=True, null=True)
+    website_link = models.CharField(max_length=255, null=True, blank=True)
+    twitter_link = models.CharField(max_length=255, null=True, blank=True)
+    instagram_link = models.CharField(max_length=255, null=True, blank=True)
+    facebook_link = models.CharField(max_length=255, null=True, blank=True)
     
 
     def __str__(self):
