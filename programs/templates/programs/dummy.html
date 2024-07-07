@@ -1,75 +1,221 @@
-{% extends 'accounts/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f1f1f1;
+        }
+        .profile-section {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #fff;
+            border-radius: 50%;
+            margin-top: -50px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .profile-info h4 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .profile-info p {
+            color: #777;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .btn-outline-secondary {
+            font-size: 14px;
+            padding: 5px 15px;
+        }
+        .find-me i {
+            font-size: 24px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        .find-me i.fa-facebook {
+            color: #3b5998;
+        }
+        .find-me i.fa-twitter {
+            color: #1da1f2;
+        }
+        .find-me i.fa-instagram {
+            color: #e1306c;
+        }
+        .find-me i:hover {
+            color: #28a745;
+        }
+        .nav-tabs {
+            margin-top: 20px;
+            background-color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .nav-tabs .nav-link {
+            color: #495057;
+            border: none;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 16px;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #28a745;
+            color: white;
+            border-radius: 0;
+        }
+        .event-category {
+        background-color: #ffffff;
+        border: 1px solid #e9ecef;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+    .event-category:hover {
+        background-color: #f8f9fa;
+        border-color: #ced4da;
+    }
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    .card-text {
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+    }
+    .btn-success {
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .btn-outline-secondary {
+        transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .btn-outline-secondary:hover {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    </style>
+</head>
+<body>
 
-{% block promo %}
-    <div class="promo-section">
-        <h2 class="font-weight-bold mt-4">The Easiest and Most Powerful Online Event</h2>
-        <h2 class="font-weight-bold">Booking and Ticketing System</h2>
-        <h5 class="mt-5">Bookie is an all-in-one event ticketing platform for event organisers,</h5>
-        <h5>promoters, and managers. Easily create, promote and manage</h5>
-        <h5 class="mb-3">your events of any type and size.</h5>
-        <a href="{% url 'create_event' %}" class="btn btn-create-event">Create Event →</a>
-        
-        <!-- Diamond decorations -->
-        <div class="diamond top-right"></div>
-        <div class="diamond small bottom-right"></div>
-        <div class="diamond small bottom-left"></div>
+    <header class="site-header mb-10">
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top" style="background-color: #ffffff;">
+            <span class="navbar-brand" href="#">
+                <img src="{% static 'images/bookie_logo.png' %}" width="30" height="30" class="d-inline-block align-top"
+                    alt="">
+                Bookie
+            </span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+                <a href="{% url 'create_event' %}" class="btn btn-success mr-1">Create Event</a>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <a class="navbar-brand" href="{% url 'profile' %}">
+                    <img src="{{ user.profile.image.url }}" width="30" height="30"
+                        class="rounded-circle account-img ml-3" alt="">
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-danger" style="padding: 2px 5px; font-size: 12px;">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+<div class="container">
+    <!-- Profile Section -->
+    <div class="profile-section" style="margin-top: 150px;">
+        <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="profile-pic img-fluid rounded-circle">
+        <div class="profile-info text-center mt-3">
+            <h4>{{ user.first_name}} {{ user.last_name }}</h4>
+            <p>{{ user.email }}</p>
+            <p>Hey I am {{ user.first_name}} {{ user.last_name }}</p>
+        </div>
     </div>
-{% endblock promo %}
+    
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs justify-content-center mt-4">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Organized Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">About Organizer</a>
+        </li>
+    </ul>
 
-{% block content %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Explore Events</h1>
-
-        <div class="btn-group mb-3" role="group" aria-label="Filter by category">
-            <a class="btn btn-primary mr-1" href="{% url 'home' %}">All</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_arts' %}">Arts</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_business' %}">Business</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_concert' %}">Concert</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_education' %}">Education</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_fashion' %}">Fashion</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_film' %}">Film</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_music' %}">Music</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_politics' %}">Politics</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_science' %}">Science & Technology</a>
-            <a class="btn filter-btn" href="{% url 'filter_events_by_others' %}">Others</a>
-        </div>
-
-        <div class="btn-group mb-3" role="group" aria-label="Filter by date">
-            <a class="btn filter-btn" href="#">All</a>
-            <a class="btn filter-btn" href="#">Today</a>
-            <a class="btn filter-btn" href="#">Tomorrow</a>
-            <a class="btn filter-btn" href="#">This Week</a>
-            <a class="btn filter-btn" href="#">This Month</a>
-            <a class="btn filter-btn" href="#">Next Month</a>
-            <a class="btn filter-btn" href="#">This Year</a>
-        </div>
-
-        <div class="container">
-            {% for event in events %}
-                {% if forloop.counter0|divisibleby:4 %}
-                    <div class="row">
-                {% endif %}
-                    <div class="card mr-4" style="width: 15rem;">
-                        <img src="{{ event.image.url }}" alt="{{ event.name }}" class="card-img-top" style="height: 15rem; width: 240px;">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{% url 'events_info' event.id %}">{{ event.name }}</a>
-                            </h5>
-                            <p class="card-text">{{ event.short_description }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <p class="card-text">On {{ event.event_date }} at {{ event.start_time|date:'h:i A'}}</p>
-                        </div>
+    
+    <div class="container">
+        {% for event in events %}
+            {% if forloop.counter0|divisibleby:4 %}
+                <div class="row">
+            {% endif %}
+                <div class="card mr-4 mt-5" style="width: 15rem;">
+                    <img src="{{ event.image.url }}" alt="{{ event.name }}" class="card-img-top" style="height: 15rem; width: 240px;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'events_info' event.id %}">{{ event.name }}</a>
+                        </h5>
+                        <p class="card-text">{{ event.short_description }}</p>
                     </div>
-                {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
+                    <div class="card-footer">
+                        <p class="card-text">On {{ event.event_date }} at {{ event.start_time|date:'h:i A'}}</p>
                     </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
+                </div>
+            {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
-         <!-- ADD PAGINATION HERE -->
-        <nav aria-label="Page navigation" class="mt-5">
+     <nav aria-label="Page navigation" class="mt-5">
             <ul class="pagination justify-content-center">
                 {% if events.has_previous %}
                 <li class="page-item">
@@ -113,6 +259,13 @@
                     {% endif %}
             </ul>
         </nav>
-    </div>
+</div>
 
-{% endblock content %}
+<!-- Bootstrap and FontAwesome JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

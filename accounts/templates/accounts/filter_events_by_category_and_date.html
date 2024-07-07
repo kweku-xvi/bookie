@@ -80,8 +80,9 @@
             {% endif %}
         </div>
 
+        <!-- DATE FILTER -->
         <div class="btn-group mb-3" role="group" aria-label="Filter by date">
-            <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_category' category %}">All</a>
+            <a class="btn filter-btn" href="{% url 'filter_events_by_category' category %}">All</a>
             {% if date_filter == 'today' %}
                 <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_category_and_date' category 'today' %}">Today</a>
             {% else %}
@@ -113,9 +114,6 @@
             {% endif %}
 
         </div>
-
-
-
 
         <!-- LOOP TO SHOW EVENTS -->
         <div class="container">

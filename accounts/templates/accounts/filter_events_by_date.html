@@ -37,31 +37,31 @@
 
         <div class="btn-group mb-3" role="group" aria-label="Filter by date">
             <a class="btn filter-btn" href="{% url 'home' %}">All</a>
-            {% if current_date_filter == 'today' %}
+            {% if date_filter == 'today' %}
                 <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_date' 'today' %}">Today</a>
             {% else %}
                 <a class="btn filter-btn" href="{% url 'filter_events_by_date' 'today' %}">Today</a>
             {% endif %}
 
-            {% if current_date_filter == 'tomorrow' %}
+            {% if date_filter == 'tomorrow' %}
                 <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_date' 'tomorrow' %}">Tomorrow</a>
             {% else %}
                 <a class="btn filter-btn" href="{% url 'filter_events_by_date' 'tomorrow' %}">Tomorrow</a>
             {% endif %}
 
-            {% if current_date_filter == 'next_week' %}
+            {% if date_filter == 'next_week' %}
                 <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_date' 'next_week' %}">Next Week</a>
             {% else %}
                 <a class="btn filter-btn" href="{% url 'filter_events_by_date' 'next_week' %}">Next Week</a>
             {% endif %}
             
-            {% if current_date_filter == 'next_month' %}
+            {% if date_filter == 'next_month' %}
                 <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_date' 'next_month' %}">Next Month</a>
             {% else %}
                 <a class="btn filter-btn" href="{% url 'filter_events_by_date' 'next_month' %}">Next Month</a>
             {% endif %}
 
-            {% if current_date_filter == 'this_year' %}
+            {% if date_filter == 'this_year' %}
                 <a class="btn btn-primary mr-1" href="{% url 'filter_events_by_date' 'this_year' %}">This Year</a>
             {% else %}
                 <a class="btn filter-btn" href="{% url 'filter_events_by_date' 'this_year' %}">This Year</a>

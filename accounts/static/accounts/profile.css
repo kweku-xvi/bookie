@@ -11,7 +11,137 @@
     margin-bottom: 1.5rem;
     box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
 }
+
 .me-2 {
-    margin-right: .5rem!important;
+    margin-right: .5rem !important;
 }
 
+
+/* ORGANIZER PROFILE */
+/* body {
+    background-color: #f8f9fa;
+} */
+
+.profile-section {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    margin-top: -50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info h4 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-info p {
+    color: #777;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.btn-outline-secondary {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+.find-me i {
+    font-size: 24px;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.find-me i.fa-facebook {
+    color: #3b5998;
+}
+
+.find-me i.fa-twitter {
+    color: #1da1f2;
+}
+
+.find-me i.fa-instagram {
+    color: #e1306c;
+}
+
+.find-me i:hover {
+    color: #28a745;
+}
+
+.nav-tabs {
+    margin-top: 20px;
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.nav-tabs .nav-link {
+    color: #495057;
+    border: none;
+    margin: 0;
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #28a745;
+    color: white;
+    border-radius: 0;
+}
+
+.event-category {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.event-category:hover {
+    background-color: #f8f9fa;
+    border-color: #ced4da;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.btn-success {
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-secondary {
+    transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

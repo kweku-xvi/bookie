@@ -85,7 +85,7 @@ def verify_user_view(request):
 
 
 @login_required
-def profile(request):
+def update_profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -106,34 +106,13 @@ def profile(request):
         'p_form':p_form
     }
 
-    return render(request, 'accounts/profile.html', context)
+    return render(request, 'accounts/update_profile.html', context)
 
 
-def filter_event_by_arts_and_date(request, date_filter):
-    today = now().date()
-    events = Event.objects.filter(category='arts')
-
-    if date_filter == 'today':
-        events = events.filter(event_date=today)
-    elif date_filter == 'tomorrow':
-        tomorrow = today + timedelta(days=1)
-        events = events.filter(event_date=tomorrow)
-    elif date_filter == 'next_week':
-        next_week = today + timedelta(weeks=1)
-        events = events.filter(event_date__gte=today, event_date__lt=next_week)
-    elif date_filter == 'next_month':
-        next_month = today + timedelta(days=30)
-        events = events.filter(event_date__gte=today, event_date__lt=next_month)
-    elif date_filter == 'this_year':
-        end_of_year = datetime(today.year, 12, 31).date()
-        events = events.filter(event_date__gte=today, event_date__lte=end_of_year)
-
-    return render(request, 'accounts/filter_by_date_and_category.html', {
-        'events': events,
-        'current_category': 'arts',
-        'current_date_filter': date_filter
-    })
-
+@login_required
+def profile(request):
+    return render(request, 'accounts/profile.html')
+    
 
 def filter_events_by_date_view(request, date_filter:str):
     today = now().date()
@@ -161,7 +140,7 @@ def filter_events_by_date_view(request, date_filter:str):
     context = {
         'title':'Home',
         'events':events,
-        'current_date_filter':date_filter
+        'date_filter':date_filter
     }
 
     return render(request, 'accounts/filter_events_by_date.html', context)
@@ -205,3 +184,62 @@ def filter_events_by_category(request, category:str):
     }
     
     return render(request, 'accounts/filter_events_by_category.html', context)
+
+
+def filter_event_by_category_and_date(request, category:str, date_filter:str):
+    today = now().date()
+
+    category_map = {
+        'arts': 'arts',
+        'business': 'business',
+        'concert': 'concert',
+        'education': 'education',
+        'fashion': 'fashion',
+        'film': 'film',
+        'health':'health',
+        'music': 'music',
+        'politics': 'politics',
+        'scienceandtechnology': 'scienceandtechnology',
+        'others': 'others'
+    }
+
+    date_filter_map = {
+        'today':'today',
+        'tomorrow':'tomorrow',
+        'next_week':'next_week',
+        'next_month':'next_month',
+        'this_year':'this_year',
+    }
+
+    if not category in category_map or not date_filter in date_filter_map:
+        return HttpResponse('<h1>Category or Date is wrong')
+
+    events = Event.objects.filter(is_active=True, category=category_map[category])
+
+    if date_filter == 'today':
+        events = events.filter(event_date=today)
+    elif date_filter == 'tomorrow':
+        tomorrow = today + timedelta(days=1)
+        events = events.filter(event_date=tomorrow)
+    elif date_filter == 'next_week':
+        next_week = today + timedelta(days=7)
+        events = events.filter(event_date__gte=today, event_date__lte=next_week)
+    elif date_filter == 'next_month':
+        next_month = today + timedelta(days=30)
+        events = events.filter(event_date__gte=today, event_date__lte=next_month)
+    elif date_filter == 'this_year':
+        end_of_year = datetime(today.year, 12, 31).date()
+        events = events.filter(event_date__gte=today, event_date__lte=end_of_year)
+
+    paginator = Paginator(events, 8)
+    page_number = request.GET.get('page')
+    events = paginator.get_page(page_number)
+
+    context = {
+        'events':events, 
+        'title':'Home',
+        'category':category,
+        'date_filter':date_filter,
+    }
+
+    return render(request, 'accounts/filter_events_by_category_and_date.html', context)
