@@ -17,6 +17,13 @@ def create_event_view(request):
             event = form.save(commit=False)
             event.is_active = False
             event.organized_by = request.user
+
+            if event.is_free:
+                event.is_active = True
+                event.save()
+                messages.success(request, f'Your event has been successfully updated!')
+                return redirect('home')
+
             event.save()
             return redirect(reverse('add_ticket', args=[event.id]))
     else:

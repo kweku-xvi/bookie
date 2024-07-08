@@ -32,7 +32,9 @@ class Event(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='event_images')
     is_active = models.BooleanField(default=False)
     organized_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_free = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
 
     def __str__(self):
