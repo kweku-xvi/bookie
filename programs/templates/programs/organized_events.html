@@ -116,9 +116,71 @@
                         <a class="nav-item nav-link" href="{% url 'event_organizer' organizer.id  %}">About</a>
                         <a class="nav-item nav-link active" href="{% url 'event_organized_by_user' organizer.id %}">Organised Events</a>
                     </nav>
+                    {% for event in events %}
+                        <div class="container mt-4">
+                            <div class="card">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ event.image.url }}" class="card-img" alt="{{ event.name }}" style="height: 100%;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ event.name }}</h5>
+                                            <p class="card-text">{{ event.event_date}}, {{ event.start_time|date:'h:i A'}}</p>
+                                            <a href="{% url 'events_info' event.id %}" class="btn btn-success">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
               </div>
             </div>
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if events.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                            <span class="sr-only">First</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ events.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    {% endif %}
+            
+                    {% for num in events.paginator.page_range %}
+                    {% if events.number == num %}
+                    <li class="page-item active">
+                        <a class="page-link" href="#">{{ num }}</a>
+                    </li>
+                    {% elif num > events.number|add:-3 and num < events.number|add:3 %} <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+            
+                        {% if events.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ events.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">Next</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ events.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">Last</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                </ul>
+            </nav>
         </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

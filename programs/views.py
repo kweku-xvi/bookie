@@ -37,7 +37,8 @@ def events_info_view(request, event_id:str):
 
     context = {
         'title':event.name,
-        'event':event
+        'event':event,
+        'organizer':event.organized_by
     }
 
     return render(request, 'programs/events_info.html', context)
@@ -58,7 +59,7 @@ def events_organized_by_user_view(request, id:str):
     organizer = User.objects.get(id=id)
     events = Event.objects.filter(is_active=True, organized_by=organizer)
 
-    paginator = Paginator(events, 8)
+    paginator = Paginator(events, 4)
     page_number = request.GET.get('page')
     events = paginator.get_page(page_number)
 

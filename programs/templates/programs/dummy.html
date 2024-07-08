@@ -3,55 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Status</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .event-box {
-            padding: 20px;
-            text-align: center;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-        }
-        .saved-events {
-            background-color: #4caf50;
-        }
-        .organised-events {
-            background-color: #e0e0e0;
-            color: black;
-        }
-        .attending-events {
-            background-color: #e0e0e0;
-            color: black;
-        }
-    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Event Card</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-2">
-                <a href="#" class="event-box saved-events">
-                    <span>1</span><br>
-                    <span>Saved Events</span>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="#" class="event-box organised-events">
-                    <span>2</span><br>
-                    <span>Organised Events</span>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="#" class="event-box attending-events">
-                    <span>1</span><br>
-                    <span>Attending Events</span>
-                </a>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="https://via.placeholder.com/150" class="card-img" alt="Event Image">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Step Up Open Mic Show</h5>
+                        <p class="card-text">Thu, Jun 30, 2022 4:30 AM</p>
+                        <a href="#" class="btn btn-outline-secondary">
+                            <i class="fas fa-cog"></i> Manage Event
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>
