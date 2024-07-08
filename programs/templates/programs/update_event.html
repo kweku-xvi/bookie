@@ -1,0 +1,17 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 class="text-center mt-5">Update "{{ event.name }}" Details</h1>
+
+    <div class="container mt-5 col-lg-7 create_body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form|crispy }}
+            </div>
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+        </form>
+    </div>
+{% endblock content %}

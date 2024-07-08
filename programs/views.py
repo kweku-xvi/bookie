@@ -1,6 +1,7 @@
 from .forms import EventsForm
 from .models import Event
 from accounts.models import User
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse
@@ -27,6 +28,28 @@ def create_event_view(request):
     }
 
     return render(request, 'programs/create_event.html', context)
+
+
+def update_event_view(request, event_id:str):
+    event = Event.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        form = EventsForm(request.POST, request.FILES, instance=event)
+
+        if form.is_valid():
+            event.save()
+
+            messages.success(request, f'Your event has been successfully updated!')
+            return redirect(reverse('events_info', args=[event.id]))
+    else:
+        form = EventsForm(instance=event)
+
+    context = {
+        'form':form, 
+        'event':event
+    }
+
+    return render(request, 'programs/update_event.html', context)
 
 
 def events_info_view(request, event_id:str):
