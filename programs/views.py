@@ -1,4 +1,4 @@
-from .forms import EventsForm
+from .forms import EventsForm, EditEventInfoForm
 from .models import Event
 from accounts.models import User
 from django.contrib import messages
@@ -41,7 +41,7 @@ def update_event_view(request, event_id:str):
     event = Event.objects.get(id=event_id)
 
     if request.method == 'POST':
-        form = EventsForm(request.POST, request.FILES, instance=event)
+        form = EditEventInfoForm(request.POST, request.FILES, instance=event)
 
         if form.is_valid():
             event.save()
@@ -49,7 +49,7 @@ def update_event_view(request, event_id:str):
             messages.success(request, f'Your event has been successfully updated!')
             return redirect(reverse('events_info', args=[event.id]))
     else:
-        form = EventsForm(instance=event)
+        form = EditEventInfoForm(instance=event)
 
     context = {
         'form':form, 
