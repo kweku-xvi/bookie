@@ -1,8 +1,8 @@
-from .models import Ticket
+from .models import TicketType
 from django import forms
 
 
-class TicketForm(forms.ModelForm):
+class TicketTypeForm(forms.ModelForm):
     class Meta:
-        model = Ticket
+        model = TicketType
         fields = ['name', 'price', 'quantity']

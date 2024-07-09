@@ -3,8 +3,8 @@ from programs.models import Event
 from django.db import models
 
 
-class Ticket(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+class TicketType(models.Model):
+    ticket_type_id = models.CharField(max_length=10, primary_key=True, unique=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -17,8 +17,8 @@ class Ticket(models.Model):
 
     
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.id = 'tck-' + str(uuid.uuid4())[:6]
+        if not self.ticket_type_id:
+            self.ticket_type_id = 'tck-' + str(uuid.uuid4())[:6]
         super().save(*args, **kwargs)
 
 

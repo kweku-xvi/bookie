@@ -1,5 +1,5 @@
-from .forms import TicketForm
-from .models import Ticket
+from .forms import TicketTypeForm
+from .models import TicketType
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from programs.models import Event
@@ -9,13 +9,13 @@ def add_ticket_view(request, event_id: str):
     event = get_object_or_404(Event, id=event_id)
 
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = TicketTypeForm(request.POST)
 
         if form.is_valid():
             ticket = form.save(commit=False)
             ticket.event = event
 
-            if Ticket.objects.filter(name=form.cleaned_data['name'], event=event):
+            if TicketType.objects.filter(name=form.cleaned_data['name'], event=event):
                     messages.error(request, f'Ticket with this name already exists')
                     return redirect(reverse('add_ticket', args=[event.id]))
                     
@@ -37,7 +37,7 @@ def add_ticket_view(request, event_id: str):
                 messages.success(request, f'Ticket saved! You can add another')
                 return redirect(reverse('add_ticket', args=[event.id]))
     else:
-        form = TicketForm()
+        form = TicketTypeForm()
 
     context = {
         'form': form,
