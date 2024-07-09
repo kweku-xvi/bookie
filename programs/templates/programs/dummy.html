@@ -3,28 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <title>Event Card</title>
+    <title>Booking Confirmed</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .confirmation-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .confirmation-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .confirmation-card img {
+            width: 50px;
+            margin-bottom: 20px;
+        }
+        .confirmation-card h3 {
+            margin-bottom: 20px;
+        }
+        .confirmation-card p {
+            color: #6c757d;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="card">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="https://via.placeholder.com/150" class="card-img" alt="Event Image">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Step Up Open Mic Show</h5>
-                        <p class="card-text">Thu, Jun 30, 2022 4:30 AM</p>
-                        <a href="#" class="btn btn-outline-secondary">
-                            <i class="fas fa-cog"></i> Manage Event
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<div class="confirmation-container">
+    <div class="confirmation-card">
+        <img src="https://via.placeholder.com/50" alt="Booking Confirmed Icon">
+        <h3>Booking Confirmed</h3>
+        <p>We are pleased to inform you that your reservation request has been received and confirmed.</p>
     </div>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

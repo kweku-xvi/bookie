@@ -1,11 +1,12 @@
-from .forms import TicketTypeForm
+from .forms import TicketTypeForm, BookFreeEventForm
 from .models import TicketType
+from .utils import send_booking_confirmation_email
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from programs.models import Event
 from django.urls import reverse
 
-def add_ticket_view(request, event_id: str):
+def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE 
     event = get_object_or_404(Event, id=event_id)
 
     if request.method == 'POST':
@@ -45,3 +46,48 @@ def add_ticket_view(request, event_id: str):
     }
 
     return render(request, 'tickets/add_ticket.html', context)
+
+
+def book_free_events_view(request, event_id:str):
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == 'POST':
+        form = BookFreeEventForm(request.POST, initial={'email':request.user.email})
+
+        if form.is_valid():
+            ticket_purchase = form.save(commit=False)
+            ticket_purchase.event = event
+            ticket_purchase.user = request.user
+            ticket_purchase.quantity = 1
+            ticket_purchase.payment_verified = True
+            ticket_purchase.save()
+
+            send_booking_confirmation_email(email=request.user.email, 
+                first_name=ticket_purchase.first_name, 
+                event_name=event.name,
+                ticket_id=ticket_purchase.ticket_id,
+                date=str(event.event_date),
+                time=str(event.start_time),
+                location=event.venue
+                )
+
+            return redirect('booking_confirmation')
+    else:
+        form = BookFreeEventForm(initial={'email':request.user.email})
+
+    context = {
+        'form':form,
+        'event':event, 
+        'title':f'Book - {event.name}',
+    }
+
+    return render(request, 'tickets/book_free_event.html', context)
+
+
+def booking_confirmation_view(request):
+    context = {
+        'title':'Booking Confirmed',
+        'email':request.user.email
+    }
+
+    return render(request, 'tickets/booking_confirmation.html', context)
