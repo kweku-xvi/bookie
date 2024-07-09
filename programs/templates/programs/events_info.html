@@ -25,10 +25,16 @@
                             <h1 class="mb-0">
                                 {{ event.name }} 
                                 {% if user == organizer %}
-                                    <a href="{% url 'update_event' event.id %}" class="btn btn-info">Update Event Info</a>
+                                    <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Update Event Info</a>
                                 {% endif %}
                             </h1>
-                            <p class="mb-3"><i class="fas fa-map-marker-alt"></i> <strong>Venue: </strong> {{ event.venue }} &bull; <strong>Starts at: </strong> {{  event.start_time|date:'h:i A' }} &bull; <strong>Ends at: </strong> {{  event.end_time|date:'h:i A' }}</p>
+                            <p class="mb-3">
+                                <i class="fas fa-map-marker-alt"></i> 
+                                <strong>Venue: </strong> {{ event.venue }} &bull; Starts on {{event.event_date }} {{  event.start_time|date:'h:i A' }}
+                                {% if event.is_free %}
+                                    &bull; Free
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -70,7 +76,7 @@
                             <i class="icon"><img class="img-fluid rounded mb-4" loading="lazy" src="../../static/images/green-location-icon.png"
                                 width="245" height="80" alt="Event Location"></i>
                             <div>
-                                <small>Venue</small><br>
+                                <small>Location</small><br>
                                 <strong>{{ event.venue }}</strong><br>
                             </div>
                         </div>

@@ -28,8 +28,8 @@ class MyUserManager(BaseUserManager):
 
 class User(AbstractUser):
     id = models.CharField(max_length=8, primary_key=True, unique=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=True)
     date_of_birth = models.DateField()
