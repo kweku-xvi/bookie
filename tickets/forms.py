@@ -5,4 +5,4 @@ from django import forms
 class TicketTypeForm(forms.ModelForm):
     class Meta:
         model = TicketType
-        fields = ['name', 'price', 'quantity']
+        fields = ['name', 'price', 'quantity_available']
