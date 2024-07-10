@@ -3,47 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Confirmed</title>
+    <title>Ticket Types Dropdown</title>
+    <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .confirmation-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
-        }
-        .confirmation-card {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .confirmation-card img {
-            width: 50px;
-            margin-bottom: 20px;
-        }
-        .confirmation-card h3 {
-            margin-bottom: 20px;
-        }
-        .confirmation-card p {
-            color: #6c757d;
-        }
-    </style>
 </head>
 <body>
-
-<div class="confirmation-container">
-    <div class="confirmation-card">
-        <img src="https://via.placeholder.com/50" alt="Booking Confirmed Icon">
-        <h3>Booking Confirmed</h3>
-        <p>We are pleased to inform you that your reservation request has been received and confirmed.</p>
+    <div class="container">
+        <div class="col-md-8 mt-4">
+            <form action="{% url 'book_paid_event' event.id %}" method="post" class="mt-4 bg-white border p-4 rounded">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="ticket_type">Choose a ticket type:</label>
+                    <select name="ticket_type" id="ticket_type" class="form-control" onchange="updateTicketInfo()">
+                        <option value="" selected disabled>Select a ticket type</option>
+                        {% for ticket in ticket_types %}
+                            <option value="{{ ticket.ticket_type_id }}"
+                                data-price="{{ ticket.price }}"
+                                data-quantity="{{ ticket.quantity_available }}">
+                                {{ ticket.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ticket_price">Price:</label>
+                        <input type="text" id="ticket_price" class="form-control" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ticket_quantity">Quantity Available:</label>
+                        <input type="text" id="ticket_quantity" class="form-control" readonly>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
-</div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        function updateTicketInfo() {
+            var ticketSelect = document.getElementById('ticket_type');
+            var selectedOption = ticketSelect.options[ticketSelect.selectedIndex];
+            var price = selectedOption.getAttribute('data-price');
+            var quantity = selectedOption.getAttribute('data-quantity');
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            document.getElementById('ticket_price').value = price;
+            document.getElementById('ticket_quantity').value = quantity;
+        }
+    </script>
 </body>
 </html>

@@ -95,3 +95,16 @@ def booking_confirmation_view(request):
     }
 
     return render(request, 'tickets/booking_confirmation.html', context)
+
+
+def book_paid_ticket_view(request, event_id:str):
+    event = get_object_or_404(Event, id=event_id)
+    ticket_types = TicketType.objects.filter(event=event)
+
+    context = {
+        'title':f'Book - {event.name}',
+        'ticket_types':ticket_types,
+        'event':event
+    }
+
+    return render(request, 'tickets/book_paid_event.html', context)
