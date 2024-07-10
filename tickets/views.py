@@ -1,6 +1,6 @@
 from .forms import TicketTypeForm, BookFreeEventForm
 from .models import TicketType
-from .utils import send_booking_confirmation_email
+from .utils import send_booking_confirmation_email, generate_qrcode, upload_to_imgur
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from programs.models import Event
@@ -62,13 +62,17 @@ def book_free_events_view(request, event_id:str):
             ticket_purchase.payment_verified = True
             ticket_purchase.save()
 
+            qr = generate_qrcode(ticket_purchase.ticket_id)
+            image_url = upload_to_imgur(qr)
+
             send_booking_confirmation_email(email=request.user.email, 
                 first_name=ticket_purchase.first_name, 
                 event_name=event.name,
                 ticket_id=ticket_purchase.ticket_id,
                 date=str(event.event_date),
                 time=str(event.start_time),
-                location=event.venue
+                location=event.venue,
+                img_url=image_url
                 )
 
             return redirect('booking_confirmation')
