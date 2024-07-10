@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from programs.models import Event
 from django.urls import reverse
+from django.http import HttpResponse
 
 def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE 
     event = get_object_or_404(Event, id=event_id)
@@ -88,12 +89,18 @@ def book_free_events_view(request, event_id:str):
     return render(request, 'tickets/book_free_event.html', context)
 
 
-def book_paid_ticket_view(request, event_id:str):
+def book_paid_events_view(request, event_id:str):
     event = get_object_or_404(Event, id=event_id)
     ticket_types = TicketType.objects.filter(event=event)
 
     if request.method == 'POST':
         form = BookPaidEventForm(request.POST, initial={'email':request.user.email})
+        
+        if form.is_valid():
+            selected_ticket_type_id = request.POST.get('ticket_type')
+
+            selected_ticket_type = TicketType.objects.get(ticket_type_id=selected_ticket_type_id)
+            return HttpResponse(f'You selected: {selected_ticket_type.name}')
     else:
         form = BookPaidEventForm(initial={'email':request.user.email})
 
