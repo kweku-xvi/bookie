@@ -98,9 +98,27 @@ def book_paid_events_view(request, event_id:str):
         
         if form.is_valid():
             selected_ticket_type_id = request.POST.get('ticket_type')
-
             selected_ticket_type = TicketType.objects.get(ticket_type_id=selected_ticket_type_id)
-            return HttpResponse(f'You selected: {selected_ticket_type.name}')
+
+            ticket_purchase = form.save(commit=False)
+            ticket_purchase.event = event
+            ticket_purchase.user = request.user
+            ticket_purchase.save()
+
+            qr = generate_qrcode(ticket_purchase.ticket_id)
+            image_url = upload_to_imgur(qr)
+
+            send_booking_confirmation_email(email=request.user.email, 
+                first_name=ticket_purchase.first_name,
+                event_name=event.name,
+                ticket_id=ticket_purchase.ticket_id,
+                date=str(event.event_date),
+                time=str(event.start_time),
+                location=event.venue,
+                img_url=image_url
+                )
+
+            return redirect('booking_confirmation')
     else:
         form = BookPaidEventForm(initial={'email':request.user.email})
 
