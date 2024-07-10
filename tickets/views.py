@@ -1,4 +1,4 @@
-from .forms import TicketTypeForm, BookFreeEventForm
+from .forms import TicketTypeForm, BookFreeEventForm, BookPaidEventForm
 from .models import TicketType
 from .utils import send_booking_confirmation_email, generate_qrcode, upload_to_imgur
 from django.contrib import messages
@@ -88,6 +88,26 @@ def book_free_events_view(request, event_id:str):
     return render(request, 'tickets/book_free_event.html', context)
 
 
+def book_paid_ticket_view(request, event_id:str):
+    event = get_object_or_404(Event, id=event_id)
+    ticket_types = TicketType.objects.filter(event=event)
+
+    if request.method == 'POST':
+        form = BookPaidEventForm(request.POST, initial={'email':request.user.email})
+    else:
+        form = BookPaidEventForm(initial={'email':request.user.email})
+
+
+    context = {
+        'title':f'Book - {event.name}',
+        'ticket_types':ticket_types,
+        'event':event,
+        'form':form
+    }
+
+    return render(request, 'tickets/book_paid_event.html', context)
+
+
 def booking_confirmation_view(request):
     context = {
         'title':'Booking Confirmed',
@@ -97,14 +117,3 @@ def booking_confirmation_view(request):
     return render(request, 'tickets/booking_confirmation.html', context)
 
 
-def book_paid_ticket_view(request, event_id:str):
-    event = get_object_or_404(Event, id=event_id)
-    ticket_types = TicketType.objects.filter(event=event)
-
-    context = {
-        'title':f'Book - {event.name}',
-        'ticket_types':ticket_types,
-        'event':event
-    }
-
-    return render(request, 'tickets/book_paid_event.html', context)

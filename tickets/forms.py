@@ -16,4 +16,13 @@ class BookFreeEventForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['email'].disabled = True  
-        
+
+
+class BookPaidEventForm(forms.ModelForm):
+    class Meta:
+        model = TicketPurchase
+        fields = ['first_name', 'last_name', 'quantity', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].disabled = True  
