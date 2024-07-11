@@ -97,13 +97,15 @@ def book_paid_events_view(request, event_id:str):
         form = BookPaidEventForm(request.POST, initial={'email':request.user.email})
         
         if form.is_valid():
+            selected_ticket_type_id = request.POST.get('ticket_type')
+            selected_ticket_type = TicketType.objects.get(ticket_type_id=selected_ticket_type_id)
+
             ticket_purchase = form.save(commit=False)
             ticket_purchase.event = event
             ticket_purchase.user = request.user
+            ticket_purchase.ticket_type = selected_ticket_type
             ticket_purchase.save()
 
-            selected_ticket_type_id = request.POST.get('ticket_type')
-            selected_ticket_type = TicketType.objects.get(ticket_type_id=selected_ticket_type_id)
             selected_ticket_type.quantity_available -= ticket_purchase.quantity
             selected_ticket_type.save()
 

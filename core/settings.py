@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'programs',
     'tickets',
+    'payments',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
