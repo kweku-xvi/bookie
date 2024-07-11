@@ -6,10 +6,14 @@ from django.shortcuts import render, get_object_or_404
 from tickets.models import TicketPurchase
 
 
-def buy_tickets(request, ticket_id:str):
+def checkout(request, ticket_id:str):
     email = request.user.email
     ticket_purchase = get_object_or_404(TicketPurchase, ticket_id=ticket_id)
 
-    transaction = initialize_transaction(email=email, amount=str(ticket_purchase.total_amount() * 100), reference=generate_id(20))
+    transaction = initialize_transaction(email=email, amount=str(ticket_purchase.total_amount() * 100), reference=ticket_id)
 
-    return HttpResponse(f'<h1>{transaction}</h1>')
+    context = {
+        'transaction':transaction,
+    }
+
+    return render(request, 'tickets/confirm_payment.html', context)

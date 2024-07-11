@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from programs.models import Event
 from django.urls import reverse
 from django.http import HttpResponse
+from payments.views import checkout
 
 def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE 
     event = get_object_or_404(Event, id=event_id)
@@ -106,23 +107,7 @@ def book_paid_events_view(request, event_id:str):
             ticket_purchase.ticket_type = selected_ticket_type
             ticket_purchase.save()
 
-            selected_ticket_type.quantity_available -= ticket_purchase.quantity
-            selected_ticket_type.save()
-
-            qr = generate_qrcode(ticket_purchase.ticket_id)
-            image_url = upload_to_imgur(qr)
-
-            send_booking_confirmation_email(email=request.user.email, 
-                first_name=ticket_purchase.first_name,
-                event_name=event.name,
-                ticket_id=ticket_purchase.ticket_id,
-                date=str(event.event_date),
-                time=str(event.start_time),
-                location=event.venue,
-                img_url=image_url
-                )
-
-            return redirect('booking_confirmation')
+            return checkout(request, ticket_purchase.ticket_id)
     else:
         form = BookPaidEventForm(initial={'email':request.user.email})
 
