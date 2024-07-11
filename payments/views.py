@@ -14,6 +14,8 @@ def checkout(request, ticket_id:str):
 
     context = {
         'transaction':transaction,
+        'ticket_id':ticket_id
     }
 
     return render(request, 'tickets/confirm_payment.html', context)
+

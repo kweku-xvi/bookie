@@ -94,10 +94,12 @@
 
     <div class="confirmation-container">
         <div class="confirmation-card">
-            <img src="../../static/tickets/icons8-calendar-48.png" alt="Booking Confirmed Icon">
+            <img src="{% static 'images/icons8-calendar-48.png' %}" alt="Booking Confirmed Icon">
             <h3>Confirm Booking</h3>
             <p>Please confirm booking by checking out with the checkout link below</p>
             <p><strong>{{ transaction }}</strong></p>
+            <small>Click on the <b>Confirm Payment</b> button below when you have checked out.</small> <br>
+            <a href="{% url 'payment_confirmation' %}" class="btn btn-success mt-2">Confirm Payment</a>
         </div>
     </div>
 
