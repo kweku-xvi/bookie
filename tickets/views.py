@@ -155,6 +155,9 @@ def payment_confirmation_view(request, ticket_id:str): #Not working
             paid_at=timezone.now()
         )
 
+        ticket_purchase.payment_verified = True
+        ticket_purchase.save()
+
         return redirect('booking_confirmation')
     else:
         return HttpResponse('<h1>Payment Failed. Please try again.</h1>')
