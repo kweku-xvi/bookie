@@ -6,11 +6,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from programs.models import Event
 from django.urls import reverse
+from django.utils import timezone
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from payments.models import Payment
 from payments.utils import verify_payment
 from payments.views import checkout
-from django.http import JsonResponse
 
 
 def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE 
@@ -127,42 +127,37 @@ def book_paid_events_view(request, event_id:str):
     return render(request, 'tickets/book_paid_event.html', context)
 
 
-@csrf_exempt
-def payment_confirmation_view(request): 
-    if request.method == 'POST':
-        try:
-            payload = json.loads(request.body)
-            event = payload.get('event')
-            data = payload.get('data')
+def payment_confirmation_view(request, ticket_id:str): #Not working
+    ticket_purchase = get_object_or_404(TicketPurchase, ticket_id=ticket_id)
 
-            if event == 'charge.success':
-                reference = data.get('reference')
-                ticket_purchase = get_object_or_404(TicketPurchase, ticket_id=reference)
+    payment_successful = verify_payment(ticket_id)
+    print(payment_successful)
 
-                qr = generate_qrcode(ticket_purchase.ticket_id)
-                image_url = upload_to_imgur(qr)
+    if payment_successful:
+        qr = generate_qrcode(ticket_purchase.ticket_id)
+        image_url = upload_to_imgur(qr)
 
-                send_booking_confirmation_email(
-                    email=ticket_purchase.user.email, 
-                    first_name=ticket_purchase.first_name,
-                    event_name=ticket_purchase.event.name,
-                    ticket_id=ticket_purchase.ticket_id,
-                    date=str(ticket_purchase.event.event_date),
-                    time=str(ticket_purchase.event.start_time),
-                    location=ticket_purchase.event.venue,
-                    img_url=image_url
-                )
+        send_booking_confirmation_email(email=request.user.email, 
+            first_name=ticket_purchase.first_name,
+            event_name=ticket_purchase.event.name,
+            ticket_id=ticket_purchase.ticket_id,
+            date=str(ticket_purchase.event.event_date),
+            time=str(ticket_purchase.event.start_time),
+            location=ticket_purchase.event.venue,
+            img_url=image_url
+        )
 
-                return redirect('booking_confirmation')
-            else:
-                return HttpResponse('<h1>Payment failed</h1>')
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON payload'}, status=400)
-        except KeyError as e:
-            return JsonResponse({'error': f'Missing key: {e}'}, status=400)
+        Payment.objects.create(
+            payment_id='pay-' + ticket_id,
+            user=request.user,
+            amount=ticket_purchase.total_amount(),
+            ticket_purchased=ticket_purchase,
+            paid_at=timezone.now()
+        )
+
+        return redirect('booking_confirmation')
     else:
-        return HttpResponse('<h1>Invalid request method</h1>', status=405)
-
+        return HttpResponse('<h1>Payment Failed. Please try again.</h1>')
 
 
 def booking_confirmation_view(request):

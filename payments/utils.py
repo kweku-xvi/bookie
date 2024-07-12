@@ -34,7 +34,8 @@ def initialize_transaction(amount:str, email:str, reference:str):
 
 
 def verify_payment(reference:str):
-    url = "https://api.paystack.co/transaction/verify/{reference}"
+    url = f"https://api.paystack.co/transaction/verify/{reference}"
+    print(reference)
 
     headers = {
         'Authorization':f'Bearer {PAYSTACK_SECRET}'
@@ -43,4 +44,5 @@ def verify_payment(reference:str):
     response = requests.get(url=url, headers=headers)
 
     if response.status_code == 200:
-        return response.json()['data']
+        return True
+    return False
