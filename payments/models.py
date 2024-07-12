@@ -16,4 +16,4 @@ class Payment(models.Model):
 
     
     class Meta:
-        ordering = ('paid_at',)
+        ordering = ('-paid_at',)
