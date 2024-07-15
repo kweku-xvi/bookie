@@ -1,14 +1,17 @@
-{% extends "accounts/base.html" %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1>500</h1>
-            <h3>Internal Server Error</h3>
-            <p>Something went wrong on our end. Please try again later.</p>
-            <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 Internal Server Error</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa;">
+    <div class="container text-center">
+        <h1 class="display-1">500</h1>
+        <p class="lead">Internal Server Error</p>
+        <p>Something went wrong on our end. Please try again later.</p>
+        <a href="{% url 'home' %}" class="btn btn-success" style="margin-top: 20px;">Back to home</a>
     </div>
-</div>
-{% endblock %}
+</body>
+</html>

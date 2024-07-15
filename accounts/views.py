@@ -212,7 +212,7 @@ def filter_event_by_category_and_date(request, category:str, date_filter:str):
     }
 
     if not category in category_map or not date_filter in date_filter_map:
-        return HttpResponse('<h1>Category or Date is wrong')
+        return render(request, '404.html', status=404)
 
     events = Event.objects.filter(is_active=True, category=category_map[category])
 
@@ -249,5 +249,5 @@ def custom_404(request, exception):
     return render(request, 'accounts/404.html', status=404)
 
 
-def custom_500(request, exception):
+def custom_500(request):
     return render(request, 'accounts/500.html', status=500)
