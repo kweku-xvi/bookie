@@ -9,4 +9,5 @@ urlpatterns = [
     path('search/', views.search_events_view, name='search'),
     path('<str:event_id>/', views.events_info_view, name='events_info'),
     path('<str:event_id>/update/', views.update_event_view, name='update_event'),
+    path('<str:event_id>/dashboard/', views.event_dashboard_view, name='event_dashboard'),
 ]

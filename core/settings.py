@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # change to true
 
 ALLOWED_HOSTS = ['*']
 
@@ -141,3 +141,6 @@ LOGIN_REDIRECT_URL = 'home'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+handler404 = 'accounts.views.custom_404'
+handler500 = 'accounts.views.custom_500'

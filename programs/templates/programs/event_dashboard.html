@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/events_info.css' %}" type="text/css">
+
+    <style>
+        .card {
+            text-align: center;
+            color: white;
+        }
+        .card .card-title {
+            margin: 0;
+            font-size: 2em;
+        }
+        .card .card-subtitle {
+            font-size: 1.2em;
+        }
+        .card .card-footer {
+            font-size: 0.9em;
+        }
+        .revenue-card {
+            background-color: #6c63ff;
+        }
+        .orders-card {
+            background-color: #ff6347;
+        }
+        .pageviews-card {
+            background-color: #1e90ff;
+        }
+        .ticketsales-card {
+            background-color: #32cd32;
+        }
+    </style>
+</head>
+<body style="background-color: #fafafa;">
+    <header class="site-header mb-10">
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top" style="background-color: #ffffff;">
+            <span class="navbar-brand" href="#">
+                <img src="{% static 'images/bookie_logo.png' %}" width="30" height="30" class="d-inline-block align-top"
+                    alt="">
+                Bookie
+            </span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+                <a href="{% url 'create_event' %}" class="btn btn-success mr-1">Create Event</a>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <a class="navbar-brand" href="{% url 'profile' %}">
+                    <img src="{{ user.profile.image.url }}" width="30" height="30"
+                        class="rounded-circle account-img ml-3" alt="">
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-danger" style="padding: 2px 5px; font-size: 12px;">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags != 'error' %}
+                <div class="alert alert-{{ message.tags }}" style="margin-top: 50px;">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div class="alert alert-danger" style="margin-top: 50px;">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="container ft-fam" style="margin-top: 100px;">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="mb-0">
+                    Dashboard - {{ event.name }}
+                </h1>
+                <hr>  
+            </div>
+        </div>
+    </div>
+
+        <div class="container mt-5 bg-white rounded p-5 border">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card revenue-card">
+                        <div class="card-body">
+                            <h5 class="card-title">$550.00</h5>
+                            <h6 class="card-subtitle mb-2">Revenue (AUD)</h6>
+                        </div>
+                        <div class="card-footer">
+                            <span>0.00% From Previous Period</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card orders-card">
+                        <div class="card-body">
+                            <h5 class="card-title">2</h5>
+                            <h6 class="card-subtitle mb-2">Orders</h6>
+                        </div>
+                        <div class="card-footer">
+                            <span>0.00% From Previous Period</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card pageviews-card">
+                        <div class="card-body">
+                            <h5 class="card-title">30</h5>
+                            <h6 class="card-subtitle mb-2">Page Views</h6>
+                        </div>
+                        <div class="card-footer">
+                            <span>0.00% From Previous Period</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card ticketsales-card">
+                        <div class="card-body">
+                            <h5 class="card-title">3</h5>
+                            <h6 class="card-subtitle mb-2">Ticket Sales</h6>
+                        </div>
+                        <div class="card-footer">
+                            <span>0.00% From Previous Period</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

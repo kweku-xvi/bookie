@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 
@@ -128,3 +128,14 @@ def search_events_view(request):
     }
 
     return render(request, 'programs/search.html', context)
+
+
+def event_dashboard_view(request, event_id:str):
+    event = get_object_or_404(Event, id=event_id)
+
+    context = {
+        'title':f'Dashboard - {event.name}',
+        'event':event
+    }
+
+    return render(request, 'programs/event_dashboard.html', context)
