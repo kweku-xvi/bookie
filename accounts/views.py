@@ -248,5 +248,6 @@ def filter_event_by_category_and_date(request, category:str, date_filter:str):
 def custom_404(request, exception):
     return render(request, 'accounts/404.html', status=404)
 
-def custom_404(request, exception):
+
+def custom_500(request, exception):
     return render(request, 'accounts/500.html', status=500)
