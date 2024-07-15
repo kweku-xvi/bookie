@@ -130,6 +130,7 @@ def book_paid_events_view(request, event_id:str):
 def payment_confirmation_view(request, ticket_id:str): #Not working
     ticket_purchase = get_object_or_404(TicketPurchase, ticket_id=ticket_id)
 
+
     payment_successful = verify_payment(ticket_id)
     print(payment_successful)
 
@@ -156,6 +157,8 @@ def payment_confirmation_view(request, ticket_id:str): #Not working
         )
 
         ticket_purchase.payment_verified = True
+        ticket_purchase.ticket_type.quantity_available -= ticket_purchase.quantity
+        ticket_purchase.ticket_type.save()
         ticket_purchase.save()
 
         return redirect('booking_confirmation')
