@@ -50,3 +50,18 @@ def contact_us_mail_response(email:str, name:str):
             },
         }
     )
+
+
+def send_password_reset_mail(email:str, link:str, first_name:str):
+    client.send_message(
+        message={
+            "to": {
+            "email": email,
+            },
+            "template": "YGYJMP0VPTM47YHDY9QTRTH0MDJJ",
+            "data": {
+            "firstName": first_name,
+            "link": link,
+            },
+        }
+    )

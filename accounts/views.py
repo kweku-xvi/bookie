@@ -1,17 +1,22 @@
 import os, jwt
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, ContactUsForm
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, ContactUsForm, PasswordResetRequestForm
 from .models import User
-from .utils import send_mail_verification, contact_us_mail, contact_us_mail_response
+from .utils import send_mail_verification, contact_us_mail, contact_us_mail_response, send_password_reset_mail
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.timezone import now
 from dotenv import load_dotenv
 from programs.models import Event
@@ -297,3 +302,65 @@ def contact_us_view(request):
 
 def feedback_sent_view(request):
     return render(request, 'accounts/feedback_sent.html', {'title':'Message Sent'})
+
+
+def password_reset_view(request):
+    if request.method == 'POST':
+        form = PasswordResetRequestForm(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = User.objects.get(email=email)
+
+            if user:
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                current_site = get_current_site(request).domain
+                relative_link = reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+                absolute_url = f'http://{current_site}{relative_link}'
+                link = str(absolute_url)
+
+                send_password_reset_mail(email=user.email, first_name=user.first_name, link=link)
+
+                return redirect('password_reset_done')
+            else:
+                messages.error(request, 'No user with this email address found.')
+    else:
+        form = PasswordResetRequestForm()
+    
+    context = {
+        'title':'Reset Password',
+        'form':form
+    }
+
+    return render(request, 'accounts/password_reset.html', context)
+
+
+def password_reset_confirm_view(request, uidb64, token):
+    User = get_user_model()
+
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user != None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your password has been reset successfully!')
+                return redirect('login')
+        else:
+            form = SetPasswordForm(user)
+        
+        context = {
+            'title':'Password Reset Confirm',
+            'form':form
+        }
+
+        return render(request, 'accounts/password_reset_confirm.html', context)
+    else:
+        messages.error(request, 'The password reset link was invalid, possibly because it has already been used.')

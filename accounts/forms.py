@@ -38,3 +38,13 @@ class ContactUsForm(forms.Form):
         if "example.com" in email:
             raise forms.ValidationError("Please use a different email domain.")
         return email
+
+
+class PasswordResetRequestForm(forms.Form):
+    email = forms.EmailField()
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if "example.com" in email:
+            raise forms.ValidationError("Please use a different email domain.")
+        return email
