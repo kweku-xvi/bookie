@@ -142,6 +142,7 @@
         <table class="table table-hover mt-3">
             <thead>
                 <tr>
+                    <th scope="col">Order ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Ticket Type</th>
@@ -154,6 +155,7 @@
             <tbody>
                 {% for ticket in tickets %}
                 <tr>
+                    <td>{{ ticket.ticket_id }}</td>
                     <td>{{ ticket.first_name }} {{ ticket.last_name }}</td>
                     <td>{{ ticket.user.email }}</td>
                     <td>{{ ticket.ticket_type.name }}</td>
@@ -169,7 +171,7 @@
 
     <!-- Pagination -->
      {% if tickets %}
-    <nav aria-label="Page navigation" class="mt-10">
+    <nav aria-label="Page navigation" class="mt-5">
         <ul class="pagination justify-content-center">
             {% if tickets.has_previous %}
             <li class="page-item">
