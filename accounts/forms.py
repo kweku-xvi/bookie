@@ -25,3 +25,16 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['about', 'phone', 'mobile', 'postal_address', 'website_link', 'twitter_link', 'instagram_link', 'facebook_link', 'image']
+
+
+class ContactUsForm(forms.Form):
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Your Name'}))
+    email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={'placeholder': 'Your Email'}))
+    subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Subject'}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Your Message', 'rows': 4}))
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if "example.com" in email:
+            raise forms.ValidationError("Please use a different email domain.")
+        return email

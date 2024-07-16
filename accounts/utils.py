@@ -19,3 +19,34 @@ def send_mail_verification(email:str, username:str, link:str):
             },
         }
     )
+
+
+def contact_us_mail(subject:str, message:str, name:str, senders_email:str):
+    client.send_message(
+        message={
+            "to": {
+            "email": "nksarps@gmail.com",
+            },
+            "template": "7HHFJF15B4MZYBPX77K5C4WMBKJV",
+            "data": {
+            "subject": subject,
+            "message": message,
+            "name": name,
+            "senders_email": senders_email,
+            },
+        }
+    )
+
+
+def contact_us_mail_response(email:str, name:str):
+    client.send_message(
+        message={
+            "to": {
+            "email": email,
+            },
+            "template": "9A0MXQA2CK4MR8KFNHPN67RH3SF9",
+            "data": {
+            "userName": name,
+            },
+        }
+    )

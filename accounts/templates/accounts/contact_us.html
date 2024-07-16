@@ -1,0 +1,36 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block promo %}
+    <div class="promo-section-2">
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 1%;"></div>
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 99%;"></div>      
+    </div>
+{% endblock promo %}
+
+{% block content %}
+    <div class="ft-fam">
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="mb-0">
+                        Contact Us
+                    </h1>
+                    <hr>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

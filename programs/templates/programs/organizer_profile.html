@@ -26,26 +26,19 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                  </li>
+                  <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Help
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
+                        <a class="dropdown-item" href="{% url 'contact_us' %}">Contact Us</a>
+                    </div>
+                </li>
                 </ul>
                 <a href="{% url 'create_event' %}" class="btn btn-success mr-1">Create Event</a>
                 <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
@@ -187,7 +180,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-primary" href="{% url 'update_profile' %}">Edit Info</a>
+                                <a class="btn btn-primary" href="{% url 'update_profile' %}">Update Information</a>
                             </div>
                         </div>
                     {% endif %}

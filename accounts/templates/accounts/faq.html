@@ -1,0 +1,183 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block promo %}
+    <div class="promo-section-2">
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 1%;"></div>
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 99%;"></div>      
+    </div>
+{% endblock promo %}
+
+{% block content %}
+    <div class="ft-fam">
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="mb-0">
+                        Frequently Asked Questions
+                    </h1>
+                    <hr>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="accordion" id="faqAccordion">
+            <h2 class="ft-fam">General Questions</h2>
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            What is Bookie?
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Bookie is an all-in-one event management and ticketing platform designed to simplify the process of organizing, promoting, and managing events.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            How does Bookie help with event management?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Bookie offers tools for event creation, promotion, ticket sales, and attendee management, making it easier for organizers to handle all aspects of their events.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Can I use Bookie for both online and in-person events?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Yes, Bookie supports both online and in-person events.
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="ft-fam">Event Creation</h2>
+            <div class="card">
+                <div class="card-header" id="headingFour">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            How do I create an event on Bookie?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        To create an event, sign in to your Bookie account, click on the "Create Event" button, and follow the prompts to enter event details, ticket types, pricing, and other relevant information.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFive">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            How do I set up different ticket types?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        During the event creation process, you can set up multiple ticket types by specifying names, prices, and quantity available.
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="ft-fam">Ticket Sales</h2>
+            <div class="card">
+                <div class="card-header" id="headingSix">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            How are tickets delivered to attendees?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Tickets are delivered to attendees via email.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingSeven">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            How can attendees purchase tickets?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Attendees can purchase tickets directly from the event page on the Bookie platform.
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="ft-fam">Attendee Management</h2>
+            <div class="card">
+                <div class="card-header" id="headingEight">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                            How do I manage attendee information?
+
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        You can view and manage attendee information through the Bookie dashboard, where you can track ticket sales, contact attendees, and export attendee lists.
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="ft-fam">Payment and Fees</h2>
+            <div class="card">
+                <div class="card-header" id="headingNine">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                            What fees does Bookie charge for using the platform?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Bookie is free.
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="ft-fam">Support and Troubleshooting</h2>
+            <div class="card">
+                <div class="card-header" id="headingTen">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                            What should I do if I encounter an issue?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        If you encounter any issues, you can contact our customer support team through the Bookie help center or by emailing <b>support@bookie.com</b>. We offer 24/7 support to assist you with any problems.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

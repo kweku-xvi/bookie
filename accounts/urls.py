@@ -14,4 +14,8 @@ urlpatterns = [
     path('filter/category/<str:category>/', views.filter_events_by_category, name='filter_events_by_category'),
     path('filter/date/<str:date_filter>/', views.filter_events_by_date_view, name='filter_events_by_date'),
     path('filter/category/<str:category>/date/<str:date_filter>/', views.filter_event_by_category_and_date, name='filter_events_by_category_and_date'),
+    path('about-us/', views.about_us_view, name='about_us'),
+    path('faq/', views.faq_view, name='faq'),
+    path('contact-us/', views.contact_us_view, name='contact_us'),
+    path('contact-us/sent/', views.feedback_sent_view, name='feedback_sent'),
 ]

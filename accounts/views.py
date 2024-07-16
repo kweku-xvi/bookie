@@ -1,7 +1,7 @@
 import os, jwt
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, ContactUsForm
 from .models import User
-from .utils import send_mail_verification
+from .utils import send_mail_verification, contact_us_mail, contact_us_mail_response
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.paginator import Paginator
@@ -251,3 +251,49 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, 'accounts/500.html', status=500)
+
+
+def about_us_view(request):
+    return render(request, 'accounts/about_us.html', {'title':'About Us'})
+
+
+def faq_view(request):
+    return render(request, 'accounts/faq.html', {'title':'FAQ'})
+
+
+def contact_us_view(request):
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            contact_us_mail(
+                name=name,
+                subject=subject,
+                senders_email=email,
+                message=message
+            )
+
+            contact_us_mail_response(
+                email=email,
+                name=name
+            )
+
+            return redirect('feedback_sent')
+    else:
+        form = ContactUsForm()
+
+    context = {
+        'title':'Contact Us',
+        'form':form
+    }
+
+    return render(request, 'accounts/contact_us.html', context)
+
+
+def feedback_sent_view(request):
+    return render(request, 'accounts/feedback_sent.html', {'title':'Message Sent'})
