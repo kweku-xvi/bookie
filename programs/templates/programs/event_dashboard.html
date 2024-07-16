@@ -101,61 +101,151 @@
         <div class="row align-items-center">
             <div class="col">
                 <h1 class="mb-0">
-                    Dashboard - {{ event.name }}
+                    {{ event.name }} - Dashboard
                 </h1>
                 <hr>  
             </div>
         </div>
     </div>
 
-        <div class="container mt-5 bg-white rounded p-5 border">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card revenue-card">
-                        <div class="card-body">
-                            <h5 class="card-title">$550.00</h5>
-                            <h6 class="card-subtitle mb-2">Revenue (AUD)</h6>
-                        </div>
-                        <div class="card-footer">
-                            <span>0.00% From Previous Period</span>
-                        </div>
+    <div class="container mb-5 py-4 bg-white border rounded">
+        <div class="row mt-3" style="justify-content: center;">
+            <div class="col-md-3">
+                <div class="card revenue-card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">GHC {{revenue}}</h5>
+                        <h6 class="card-subtitle">Total Revenue</h6>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card orders-card">
-                        <div class="card-body">
-                            <h5 class="card-title">2</h5>
-                            <h6 class="card-subtitle mb-2">Orders</h6>
-                        </div>
-                        <div class="card-footer">
-                            <span>0.00% From Previous Period</span>
-                        </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card ticketsales-card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">{{ tickets_sold }}</h5>
+                        <h6 class="card-subtitle">Ticket Sales</h6>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card pageviews-card">
-                        <div class="card-body">
-                            <h5 class="card-title">30</h5>
-                            <h6 class="card-subtitle mb-2">Page Views</h6>
-                        </div>
-                        <div class="card-footer">
-                            <span>0.00% From Previous Period</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card ticketsales-card">
-                        <div class="card-body">
-                            <h5 class="card-title">3</h5>
-                            <h6 class="card-subtitle mb-2">Ticket Sales</h6>
-                        </div>
-                        <div class="card-footer">
-                            <span>0.00% From Previous Period</span>
-                        </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card orders-card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">{{ total_orders }}</h5>
+                        <h6 class="card-subtitle">Total Orders</h6>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="container p-5 bg-white mt-3 border rounded">
+        <h3>Orders List</h3>
+        <table class="table table-hover mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Ticket Type</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Purchase Date</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.first_name }} {{ ticket.last_name }}</td>
+                    <td>{{ ticket.user.email }}</td>
+                    <td>{{ ticket.ticket_type.name }}</td>
+                    <td>{{ ticket.ticket_type.price }}</td>
+                    <td>{{ ticket.quantity }}</td>
+                    <td>{{ ticket.purchase_date }}</td>
+                    <td>{{ ticket.total_amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+     {% if tickets %}
+    <nav aria-label="Page navigation" class="mt-10">
+        <ul class="pagination justify-content-center">
+            {% if tickets.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <span aria-hidden="true">First</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ tickets.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% endif %}
+    
+            {% for num in tickets.paginator.page_range %}
+            {% if tickets.number == num %}
+            <li class="page-item active">
+                <a class="page-link" href="#">{{ num }}</a>
+            </li>
+            {% elif num > tickets.number|add:-3 and num < tickets.number|add:3 %} <li class="page-item">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+    
+                {% if tickets.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ tickets.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">Next</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ tickets.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">Last</span>
+                        <span class="sr-only">Last</span>
+                    </a>
+                </li>
+                {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    <footer class="text-white mt-5" style="background-color: #3f51b5;">
+        <div class="container p-5">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5>About Us</h5>
+                    <p class="text-white">Bookie provides premier event management and booking services, ensuring your events are memorable and stress-free. From corporate functions to personal celebrations, we handle every detail with care and precision.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone mr-1"></i> +233 247 884320</li>
+                        <li><i class="fas fa-envelope mr-1"></i> info@bookie.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-1"></i> KNUST, Kumasi, Ghana</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <ul class="list-unstyled d-flex">
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center py-3">
+            <p class="mb-1" style="color: black;">© 2024 Bookie. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

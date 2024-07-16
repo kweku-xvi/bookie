@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from tickets.models import TicketPurchase
 
 
 def create_event_view(request):
@@ -132,10 +133,26 @@ def search_events_view(request):
 
 def event_dashboard_view(request, event_id:str):
     event = get_object_or_404(Event, id=event_id)
+    tickets_sold = TicketPurchase.objects.filter(event=event, payment_verified=True)
+    total_orders = tickets_sold.count()
+
+    paginator = Paginator(tickets_sold, 10)
+    page_number = request.GET.get('page')
+    tickets_sold = paginator.get_page(page_number)
+
+    total_revenue = 0
+    ticket_quantity = 0
+    for ticket in tickets_sold:
+        total_revenue += ticket.total_amount()
+        ticket_quantity += ticket.quantity
 
     context = {
         'title':f'Dashboard - {event.name}',
-        'event':event
+        'event':event,
+        'tickets':tickets_sold,
+        'tickets_sold':ticket_quantity,
+        'revenue':total_revenue,
+        'total_orders':total_orders,
     }
 
     return render(request, 'programs/event_dashboard.html', context)

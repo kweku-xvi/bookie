@@ -1,98 +1,223 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Bookie</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Dashboard</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/events_info.css' %}" type="text/css">
+
+    <style>
+        .card {
+            text-align: center;
+            color: white;
+        }
+        .card .card-title {
+            margin: 0;
+            font-size: 2em;
+        }
+        .card .card-subtitle {
+            font-size: 1.2em;
+        }
+        .card .card-footer {
+            font-size: 0.9em;
+        }
+        .revenue-card {
+            background-color: #6c63ff;
+        }
+        .orders-card {
+            background-color: #ff6347;
+        }
+        .pageviews-card {
+            background-color: #1e90ff;
+        }
+        .ticketsales-card {
+            background-color: #32cd32;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: #fafafa;">
+    <header class="site-header mb-10">
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top" style="background-color: #ffffff;">
+            <span class="navbar-brand" href="#">
+                <img src="{% static 'images/bookie_logo.png' %}" width="30" height="30" class="d-inline-block align-top"
+                    alt="">
+                Bookie
+            </span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Help
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
+                            <a class="dropdown-item" href="{% url 'contact_us' %}">Contact Us</a>
+                        </div>
+                    </li>
+                </ul>
+                <a href="{% url 'create_event' %}" class="btn btn-success mr-1">Create Event</a>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <a class="navbar-brand" href="{% url 'profile' %}">
+                    <img src="{{ user.profile.image.url }}" width="30" height="30"
+                        class="rounded-circle account-img ml-3" alt="">
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-danger" style="padding: 2px 5px; font-size: 12px;">Logout</a>
+            </div>
+        </nav>
+    </header>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Bookie</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About Us</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Services</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">FAQ</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Contact</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags != 'error' %}
+                <div class="alert alert-{{ message.tags }}" style="margin-top: 50px;">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div class="alert alert-danger" style="margin-top: 50px;">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
-<!-- Main Content -->
-<div class="container my-5">
-  <div class="row">
-    <div class="col text-center">
-      <h1>Contact Us</h1>
-      <p class="lead">We'd love to hear from you! Reach out to us with any questions or feedback.</p>
+    <div class="container ft-fam" style="margin-top: 100px;">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="mb-0">
+                    Dashboard - {{ event.name }}
+                </h1>
+                <hr>  
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-6">
-      <h2>Get In Touch</h2>
-      <p>Have a question or need assistance? Fill out the form below and our support team will get back to you as soon as possible.</p>
-      <form>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Your Name">
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="Your Email">
-        </div>
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <input type="text" class="form-control" id="subject" placeholder="Subject">
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send Message</button>
-      </form>
-    </div>
-    <div class="col-md-6">
-      <h2>Contact Information</h2>
-      <ul class="list-unstyled">
-        <li><strong>Email:</strong> support@bookie.com</li>
-        <li><strong>Phone:</strong> +123 456 7890</li>
-        <li><strong>Address:</strong> 123 Event Street, City, Country</li>
-      </ul>
-      <h2>Follow Us</h2>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png" alt="Facebook"></a></li>
-        <li class="list-inline-item"><a href="#"><img src="https://img.icons8.com/fluent/48/000000/twitter.png" alt="Twitter"></a></li>
-        <li class="list-inline-item"><a href="#"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png" alt="Instagram"></a></li>
-        <li class="list-inline-item"><a href="#"><img src="https://img.icons8.com/fluent/48/000000/linkedin.png" alt="LinkedIn"></a></li>
-      </ul>
-    </div>
-  </div>
-</div>
 
-<!-- Footer -->
-<footer class="bg-light text-center py-4">
-  <p>&copy; 2024 Bookie. All Rights Reserved.</p>
-</footer>
+    <div class="container mb-5">
+        <div class="row mt-3" style="justify-content: center;">
+            <div class="col-md-3">
+                <div class="card revenue-card">
+                    <div class="card-body">
+                        <h5 class="card-title">GHC 550.00</h5>
+                        <h6 class="card-subtitle mb-2">Revenue (AUD)</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card ticketsales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">3</h5>
+                        <h6 class="card-subtitle mb-2">Ticket Sales</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card orders-card">
+                    <div class="card-body">
+                        <h5 class="card-title">2</h5>
+                        <h6 class="card-subtitle mb-2">Total Attendees</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div class="container p-5 bg-white mt-3 rounded border">
+        <h3>Attendee List</h3>
+        <table class="table table-hover mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Ticket Type</th>
+                    <th scope="col">Purchase Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td>VIP</td>
+                    <td>2024-07-01</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@example.com</td>
+                    <td>General Admission</td>
+                    <td>2024-06-28</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mike Johnson</td>
+                    <td>mike.johnson@example.com</td>
+                    <td>General Admission</td>
+                    <td>2024-06-25</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="text-white mt-5" style="background-color: #3f51b5;">
+        <div class="container p-5">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5>About Us</h5>
+                    <p class="text-white">Bookie provides premier event management and booking services, ensuring your events are memorable and stress-free. From corporate functions to personal celebrations, we handle every detail with care and precision.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone mr-1"></i> +233 247 884320</li>
+                        <li><i class="fas fa-envelope mr-1"></i> info@bookie.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-1"></i> KNUST, Kumasi, Ghana</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <ul class="list-unstyled d-flex">
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center py-3">
+            <p class="mb-1" style="color: black;">© 2024 Bookie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

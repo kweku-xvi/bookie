@@ -26,6 +26,7 @@
                                 {{ event.name }} 
                                 {% if user == organizer %}
                                     <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Update Event Info</a>
+                                    <a href="{% url 'event_dashboard' event.id %}" class="btn btn-info">Dashboard</a>
                                 {% endif %}
                             </h1>
                             <p class="mb-3">
