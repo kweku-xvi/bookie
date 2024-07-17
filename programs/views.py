@@ -22,8 +22,8 @@ def create_event_view(request):
             if event.is_free:
                 event.is_active = True
                 event.save()
-                messages.success(request, f'Your event has been successfully updated!')
-                return redirect('home')
+                messages.success(request, f'Your event has been successfully created!')
+                return redirect(reverse('events_info', args=[event.id]))
 
             event.save()
             return redirect(reverse('add_ticket', args=[event.id]))
