@@ -27,7 +27,7 @@
                             </h1>
                             <p class="mb-3">
                                 <strong>Venue: </strong> {{ event.venue }} &bull; Starts on {{event.event_date }} {{  event.start_time|date:'h:i A' }}
-                                &bull; <strong>Category: </strong> {{ event.category }}
+                                &bull; <strong>Category: </strong> {{ event.get_category_display_name }}
                                 {% if event.is_free %}
                                     &bull; Free
                                 {% endif %}

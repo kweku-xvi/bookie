@@ -46,7 +46,10 @@ class Event(models.Model):
             self.id = 'ev-' + str(uuid.uuid4())[:6]
         super().save(*args, **kwargs)
 
-
     
+    def get_category_display_name(self):
+        return dict(self.EVENT_CATEGORIES).get(self.category, 'Unknown')
+
+
     class Meta:
         ordering = ('-created_at',)
