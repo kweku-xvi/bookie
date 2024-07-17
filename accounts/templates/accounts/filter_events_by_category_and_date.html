@@ -116,28 +116,33 @@
         </div>
 
         <!-- LOOP TO SHOW EVENTS -->
-        <div class="container">
-            {% for event in events %}
-                {% if forloop.counter0|divisibleby:4 %}
-                    <div class="row">
-                {% endif %}
-                    <div class="card mr-4" style="width: 15rem;">
-                        <img src="{{ event.image.url }}" alt="{{ event.name }}" class="card-img-top" style="height: 15rem; width: 240px;">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{% url 'events_info' event.id %}">{{ event.name }}</a>
-                            </h5>
-                            <p class="card-text">{{ event.short_description }}</p>
+        {% if events %}
+            <div class="container">
+                {% for event in events %}
+                    {% if forloop.counter0|divisibleby:4 %}
+                        <div class="row">
+                    {% endif %}
+                        <div class="card mr-4" style="width: 15rem;">
+                            <img src="{{ event.image.url }}" alt="{{ event.name }}" class="card-img-top" style="height: 15rem; width: 240px;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{% url 'events_info' event.id %}">{{ event.name }}</a>
+                                </h5>
+                                <p class="card-text">{{ event.short_description }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">On {{ event.event_date }} at {{ event.start_time|date:'h:i A'}}</p>
+                            </div>
                         </div>
-                        <div class="card-footer">
-                            <p class="card-text">On {{ event.event_date }} at {{ event.start_time|date:'h:i A'}}</p>
+                    {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
                         </div>
-                    </div>
-                {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <h1 class="mt-4 ft-fam"> No Events Available</h1>
+            <p>There are no events that match your current filter settings. Please adjust your filters or explore different categories to find exciting events.</p>
+        {% endif %}
         
 
          <!-- ADD PAGINATION HERE -->

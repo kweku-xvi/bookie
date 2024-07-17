@@ -1,7 +1,7 @@
 {% extends 'accounts/base.html' %}
 
 {% block promo %}
-    <div class="promo-section">
+    <div class="promo-section ft-fam">
         <h2 class="font-weight-bold mt-4">The Easiest and Most Powerful Online Event</h2>
         <h2 class="font-weight-bold">Booking and Ticketing System</h2>
         <h5 class="mt-5">Bookie is an all-in-one event ticketing platform for event organisers,</h5>
@@ -90,7 +90,8 @@
             </ul>
         </nav>
         {% else %}
-            <h1 class="mb-4"> No events found matching your search query.</h1>
+            <h1 class="mb-4 mt-4 ft-fam"> No Events Found.</h1>
+            <p>We couldn't find any events matching your search criteria. Please try searching with different keywords or explore other categories to discover exciting events.</p>
         {% endif %}     
     </div>
 

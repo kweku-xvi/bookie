@@ -27,7 +27,8 @@ load_dotenv()
 
 @login_required
 def home(request):
-    events_list = Event.objects.filter(is_active=True)
+    today = now().date()
+    events_list = Event.objects.filter(is_active=True, event_date__gte=today)
     paginator = Paginator(events_list, 8)
 
     page_number = request.GET.get('page')
@@ -152,7 +153,8 @@ def filter_events_by_date_view(request, date_filter:str):
 
 
 def filter_events_by_category(request, category:str):
-    events = Event.objects.filter(is_active=True)
+    today = now().date()
+    events = Event.objects.filter(is_active=True, event_date__gte=today)
 
     if category == 'arts':
         events = events.filter(category='arts')
