@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +20,42 @@
         href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-5/assets/css/registration-5.css">
 </head>
 
-<body>
+<body style="background-color: #fafafa;">
+    <header class="site-header" style="margin-bottom: 100px;">
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top" style="background-color: #ffffff;">
+            <span class="navbar-brand" href="#">
+                <img src="{% static 'images/bookie_logo.png' %}" width="30" height="30" class="d-inline-block align-top"
+                    alt="">
+                Bookie
+            </span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Help
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
+                            <a class="dropdown-item" href="{% url 'contact_us' %}">Contact Us</a>
+                        </div>
+                    </li>
+                </ul>
+                <a href="{% url 'login' %}" class="mr-2" style="text-decoration: none; color: black;">Sign In</a>
+                <a href="{% url 'signup' %}" class="mr-4" style="text-decoration: none; color: black;">Sign Up</a>
+            </div>
+        </nav>
+    </header>
     <!-- Registration 5 - Bootstrap Brain Component -->
     <section class="p-3 p-md-4 p-xl-5">
         <div class="container">
