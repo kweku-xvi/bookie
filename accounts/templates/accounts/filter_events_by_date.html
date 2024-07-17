@@ -94,7 +94,8 @@
         
 
          <!-- ADD PAGINATION HERE -->
-        <nav aria-label="Page navigation" class="mt-5">
+        {% if events %}
+         <nav aria-label="Page navigation" class="mt-5">
             <ul class="pagination justify-content-center">
                 {% if events.has_previous %}
                 <li class="page-item">
@@ -138,6 +139,7 @@
                     {% endif %}
             </ul>
         </nav>
+        {% endif %}
     </div>
 
 {% endblock content %}
