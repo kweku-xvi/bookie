@@ -9,4 +9,5 @@ urlpatterns = [
     path('booking-confirmed/', views.booking_confirmation_view, name='booking_confirmation'),
     path('payment-confirmation/<str:ticket_id>/', views.payment_confirmation_view, name='payment_confirmation'),
     path('type/<str:ticket_type_id>/update/', views.update_ticket_type_view, name='update_ticket_type'),
+    path('quantity-error/', views.quantity_error_page_view, name='quantity_error'),
 ]

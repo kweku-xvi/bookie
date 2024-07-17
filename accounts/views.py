@@ -1,5 +1,5 @@
 import os, jwt
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, ContactUsForm, PasswordResetRequestForm
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, ContactUsForm, PasswordResetRequestForm, CustomUserAuthenticationForm
 from .models import User
 from .utils import send_mail_verification, contact_us_mail, contact_us_mail_response, send_password_reset_mail
 from datetime import datetime, timedelta
@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import LoginView
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Q
 from django.http import HttpResponse
@@ -88,6 +89,11 @@ def verify_user_view(request):
         return HttpResponse('<h1>User does not exist</h1>')
     except Exception as e:
         return HttpResponse(f'<h1>Error: {str(e)}</h1>')
+
+
+class CustomLoginView(LoginView):
+    form_class = CustomUserAuthenticationForm
+    template_name = 'accounts/login.html'
 
 
 @login_required

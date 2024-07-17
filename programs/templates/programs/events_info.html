@@ -27,9 +27,8 @@
                             </h1>
                             <p class="mb-3">
                                 <strong>Venue: </strong> {{ event.venue }} &bull; Starts on {{event.event_date }} {{  event.start_time|date:'h:i A' }}
-                                &bull; <strong>Category: </strong> {{ event.get_category_display_name }}
                                 {% if event.is_free %}
-                                    &bull; Free
+                                    &bull; <strong>FREE</strong>
                                 {% endif %}
                             </p>
                         </div>
@@ -76,7 +75,14 @@
                             <div>
                                 <small>Date and Time</small><br>
                                 <strong>{{ event.event_date }}, {{ event.start_time|date:'h:i A' }}</strong><br>
-                                <a href="#" class="green-links">Add to Calendar</a>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <i class="icon"><img class="img-fluid rounded mb-4" loading="lazy" src="../../static/images/list-16.png"
+                                width="245" height="80" alt="Event Date"></i>
+                            <div>
+                                <small>Category</small><br>
+                                <strong>{{ event.get_category_display_name }}</strong><br>
                             </div>
                         </div>
                         <div class="event-info">

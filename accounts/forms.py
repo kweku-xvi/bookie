@@ -1,6 +1,7 @@
 from .models import User, Profile
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -25,6 +26,9 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['about', 'phone', 'mobile', 'postal_address', 'website_link', 'twitter_link', 'instagram_link', 'facebook_link', 'image']
+        labels = {
+            'image':'Change Profile Photo'
+        }
 
 
 class ContactUsForm(forms.Form):
@@ -48,3 +52,13 @@ class PasswordResetRequestForm(forms.Form):
         if "example.com" in email:
             raise forms.ValidationError("Please use a different email domain.")
         return email
+
+
+class CustomUserAuthenticationForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        if not user.is_verified:
+            raise forms.ValidationError(
+                'Your email address is not verified. Please check your email for the verification link.',
+                code='unverified',
+            )
+

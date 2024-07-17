@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Confirmed</title>
+    <title>Insufficient Tickets</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
@@ -88,10 +88,11 @@
 
     <div class="confirmation-container">
         <div class="confirmation-card">
-            <img src="{% static 'images/success.png' %}" alt="Booking Confirmed Icon">
-            <h3>Booking Confirmed</h3>
-            <p>We are pleased to inform you that your reservation request has been received and confirmed.</p>
-            <p>Your ticket(s) have been sent to you via your email, <strong>{{ email }}</strong></p>
+            <img src="{% static 'images/error.png' %}" alt="Booking Confirmed Icon">
+            <h3>Insufficient Ticket Quantity</h3>
+            <p>The number of tickets you requested is more than what is currently available.</p>
+            <p>Please <strong>reduce</strong> the quantity and try again.</p>
+            <a href="javascript:history.back()" class="btn btn-primary mt-2">Go Back</a>
         </div>
     </div>
 

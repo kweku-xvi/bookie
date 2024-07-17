@@ -108,6 +108,9 @@ def book_paid_events_view(request, event_id:str):
             selected_ticket_type_id = request.POST.get('ticket_type')
             selected_ticket_type = TicketType.objects.get(ticket_type_id=selected_ticket_type_id)
 
+            if form.cleaned_data['quantity'] > selected_ticket_type.quantity_available:
+                return redirect('quantity_error')
+
             ticket_purchase = form.save(commit=False)
             ticket_purchase.event = event
             ticket_purchase.user = request.user
@@ -198,3 +201,7 @@ def update_ticket_type_view(request, ticket_type_id:str):
     }
 
     return render(request, 'tickets/update_ticket_type.html', context)
+
+
+def quantity_error_page_view(request):
+    return render(request, 'tickets/quantity_error_page.html')
