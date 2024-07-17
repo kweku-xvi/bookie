@@ -24,18 +24,23 @@
                         <div class="col">
                             <h1 class="mb-0">
                                 {{ event.name }} 
-                                {% if user == organizer %}
-                                    <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Update Event Info</a>
-                                    <a href="{% url 'event_dashboard' event.id %}" class="btn btn-info">Dashboard</a>
-                                {% endif %}
                             </h1>
                             <p class="mb-3">
-                                <i class="fas fa-map-marker-alt"></i> 
                                 <strong>Venue: </strong> {{ event.venue }} &bull; Starts on {{event.event_date }} {{  event.start_time|date:'h:i A' }}
+                                &bull; <strong>Category: </strong> {{ event.category }}
                                 {% if event.is_free %}
                                     &bull; Free
                                 {% endif %}
                             </p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            {% if user == organizer %}
+                                <hr>
+                                <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Update Event Info</a>
+                                <a href="{% url 'event_dashboard' event.id %}" class="btn btn-info">Dashboard</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -49,6 +54,7 @@
                 </div>
 
                 <!-- Sidebar -->
+                 <!-- Event Details Sidebar -->
                 <div class="col-md-4 mt-4">
                     <div class="event-card" style="background-color: #ffffff;">
                         <div>
@@ -88,6 +94,37 @@
                                 <a href="{% url 'book_paid_event' event.id %}" class="btn btn-success" style="width: 90%;">Book Now</a>
                             {% endif %}
                         </div>                        
+                    </div>
+
+
+                    <!-- Ticket Details Sidebar -->
+                    <div class="event-card" style="background-color: #ffffff;">
+                        <div>
+                            <h5> <strong>Ticket Details</strong></h5>
+                        </div>
+
+                        {% if event.is_free %}
+                            <hr>
+                            <div class="event-info">
+                                <strong>This event is FREE</strong><br>
+                            </div>
+                        {% else %}
+                            {% for ticket_type in ticket_types %}
+                            <hr>
+                            <div class="event-info">
+                                <div>
+                                    <small>{{ ticket_type.name }}</small> <br>
+                                    <strong>Price: </strong>GHC {{ ticket_type.price }}<br>
+                                    <strong>Quantity Available: </strong>{{ ticket_type.quantity_available }}<br>
+                                </div>
+                            </div>              
+                            {% endfor %} 
+                        {% endif %}  
+                        <div class="d-flex justify-content-center mt-4">
+                            {% if user == organizer and not event.is_free %}
+                                <a href="{% url 'event_tickets_info' event.id %}" class="btn btn-success" style="width: 90%;">Edit Tickets</a>
+                            {% endif %}
+                        </div>                          
                     </div>
                 </div>
             </div>

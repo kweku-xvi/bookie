@@ -7,6 +7,25 @@ class TicketTypeForm(forms.ModelForm):
         model = TicketType
         fields = ['name', 'price', 'quantity_available']
 
+        labels = {
+            'price':'Price (GHC)'
+        }
+
+
+class UpdateTicketTypeForm(forms.ModelForm):
+    class Meta:
+        model = TicketType
+        fields = ['name', 'price', 'quantity_available']
+
+        labels = {
+            'price':'Price (GHC)'
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['readonly'] = True
+        self.fields['price'].widget.attrs['readonly'] = True
+
 
 class BookFreeEventForm(forms.ModelForm):
     class Meta:

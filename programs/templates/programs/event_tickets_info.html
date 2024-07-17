@@ -1,0 +1,53 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block promo %}
+    <div class="promo-section-2">
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 1%;"></div>
+        <div class="diamond-2 small-2 bottom-right-2" style="right: 99%;"></div>
+        
+    </div>
+{% endblock promo %}
+
+{% block content %}
+    <div class="ft-fam">
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="mb-0">
+                        Tickets for, <b>{{ event.name }}</b>
+                    </h1>
+                    <hr>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-5 bg-white mt-3 border rounded">
+        <h3>Ticket Types</h3>
+        <table class="table table-hover mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Ticket Type ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity Available</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket_type in ticket_types %}
+                <tr>
+                    <td>{{ ticket_type.ticket_type_id }}</td>
+                    <td>{{ ticket_type.name }}</td>
+                    <td>{{ ticket_type.price }}</td>
+                    <td>{{ ticket_type.quantity_available }}</td>
+                    <td><a href="{% url 'update_ticket_type' ticket_type.ticket_type_id %}" class="btn btn-primary mt-2">Update</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a class="btn btn-success" href="{% url 'add_ticket' event.id %}">Add New Ticket Type</a>
+    </div>
+
+{% endblock content %}

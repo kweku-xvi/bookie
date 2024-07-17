@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from tickets.models import TicketPurchase
+from tickets.models import TicketPurchase, TicketType
 
 
 def create_event_view(request):
@@ -54,7 +54,8 @@ def update_event_view(request, event_id:str):
 
     context = {
         'form':form, 
-        'event':event
+        'event':event,
+        'title':f'Update - {event.name}'
     }
 
     return render(request, 'programs/update_event.html', context)
@@ -69,7 +70,8 @@ def events_info_view(request, event_id:str):
     context = {
         'title':event.name,
         'event':event,
-        'organizer':event.organized_by
+        'organizer':event.organized_by,
+        'ticket_types':TicketType.objects.filter(event=event)
     }
 
     return render(request, 'programs/events_info.html', context)
@@ -156,3 +158,15 @@ def event_dashboard_view(request, event_id:str):
     }
 
     return render(request, 'programs/event_dashboard.html', context)
+
+
+def event_tickets_info_view(request, event_id:str):
+    event = get_object_or_404(Event, id=event_id)
+
+    context = {
+        'title':f'Tickets - {event.name}',
+        'event':event,
+        'ticket_types':TicketType.objects.filter(event=event)
+    }
+
+    return render(request, 'programs/event_tickets_info.html', context)

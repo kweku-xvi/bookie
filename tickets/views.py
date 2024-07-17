@@ -1,5 +1,5 @@
 import json
-from .forms import TicketTypeForm, BookFreeEventForm, BookPaidEventForm
+from .forms import TicketTypeForm, BookFreeEventForm, BookPaidEventForm, UpdateTicketTypeForm
 from .models import TicketType, TicketPurchase
 from .utils import send_booking_confirmation_email, generate_qrcode, upload_to_imgur
 from django.contrib import messages
@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from payments.models import Payment
 from payments.utils import verify_payment
 from payments.views import checkout
+from urllib.parse import urlparse
 
 
 def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE 
@@ -34,7 +35,8 @@ def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE
                 event.save()
 
                 messages.success(request, f'Ticket type saved successfully')
-                return redirect('home')
+                return redirect(reverse('events_info', args=[event.id]))
+                
 
             elif 'save_add_another' in request.POST:
                 ticket.save()
@@ -175,3 +177,24 @@ def booking_confirmation_view(request):
     return render(request, 'tickets/booking_confirmation.html', context)
 
 
+def update_ticket_type_view(request, ticket_type_id:str):
+    ticket_type = get_object_or_404(TicketType, ticket_type_id=ticket_type_id)
+    event = ticket_type.event
+
+    if request.method == 'POST':
+        form = UpdateTicketTypeForm(request.POST, instance=ticket_type)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse('event_tickets_info', args=[ticket_type.event.id]))
+    else:
+        form = UpdateTicketTypeForm(instance=ticket_type)
+
+    context = {
+        'title':f'Update - {ticket_type.name}',
+        'form':form,
+        'ticket_type':ticket_type
+    }
+
+    return render(request, 'tickets/update_ticket_type.html', context)
