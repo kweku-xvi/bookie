@@ -117,7 +117,7 @@ def book_paid_events_view(request, event_id:str):
             ticket_purchase.ticket_type = selected_ticket_type
             ticket_purchase.save()
 
-            return checkout(request, ticket_purchase.ticket_id)
+            return redirect(reverse('invoice', args=[ticket_purchase.ticket_id]))
     else:
         form = BookPaidEventForm(initial={'email':request.user.email})
 
@@ -132,7 +132,7 @@ def book_paid_events_view(request, event_id:str):
     return render(request, 'tickets/book_paid_event.html', context)
 
 
-def payment_confirmation_view(request, ticket_id:str): #Not working
+def payment_confirmation_view(request, ticket_id:str):
     ticket_purchase = get_object_or_404(TicketPurchase, ticket_id=ticket_id)
 
 
@@ -205,3 +205,15 @@ def update_ticket_type_view(request, ticket_type_id:str):
 
 def quantity_error_page_view(request):
     return render(request, 'tickets/quantity_error_page.html')
+
+
+def invoice_view(request, ticket_id:str):
+    ticket = get_object_or_404(TicketPurchase, ticket_id=ticket_id)
+
+    context = {
+        'title':'Confirm Booking', 
+        'ticket':ticket,
+        'event':ticket.event,
+    }
+
+    return render(request, 'tickets/invoice.html', context)

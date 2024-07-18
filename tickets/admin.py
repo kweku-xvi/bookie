@@ -8,7 +8,7 @@ class TicketTypeAdmin(admin.ModelAdmin):
 
 
 class TicketPurchaseAdmin(admin.ModelAdmin):
-    list_display = ('ticket_id', 'user', 'event', 'quantity')
+    list_display = ('ticket_id', 'user', 'event', 'quantity', 'total_amount') # REMOVE TOTAL AMOUNT IF ANYTHING
     readonly_fields = ('purchase_date', 'purchased_at')
 
 

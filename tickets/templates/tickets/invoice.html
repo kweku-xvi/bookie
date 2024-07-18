@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Booking</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/events_info.css' %}" type="text/css">
+    <style>
+        .confirmation-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .confirmation-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .confirmation-card img {
+            width: 50px;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-card h3 {
+            margin-bottom: 20px;
+        }
+
+        .confirmation-card p {
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body style="background-color: #fafafa;">
+    <header class="site-header">
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top" style="background-color: #ffffff;">
+            <span class="navbar-brand" href="#">
+                <img src="{% static 'images/bookie_logo.png' %}" width="30" height="30" class="d-inline-block align-top"
+                    alt="">
+                Bookie
+            </span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Help
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
+                            <a class="dropdown-item" href="{% url 'contact_us' %}">Contact Us</a>
+                        </div>
+                    </li>
+                </ul>
+                <a href="{% url 'create_event' %}" class="btn btn-success mr-1">Create Event</a>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <a class="navbar-brand" href="{% url 'profile' %}">
+                    <img src="{{ user.profile.image.url }}" width="30" height="30"
+                        class="rounded-circle account-img ml-3" alt="">
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-danger" style="padding: 2px 5px; font-size: 12px;">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="ft-fam" style="margin-top: 100px;">
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="mb-0">
+                        Booking Information
+                        <hr>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5" style="width: auto; height: auto;">
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{ event.image.url }}" class="card-img" alt="{{ event.name }}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.name }}</h5>
+                        <p class="card-text"><b>Date: </b>{{ event.event_date }}, {{ event.start_time|date:'h:i A' }}</p>
+                        <p class="card-text"><small class="text-muted">{{ ticket.first_name }} {{ ticket.last_name }}</small></p>
+                        <p class="card-text"><strong>{{ ticket.quantity }} x Ticket(s)</strong></p>
+                        <p class="card-text"><strong>Total: GHC {{ ticket.total_amount }}</strong></p>
+                        <a href="{% url 'checkout' ticket.ticket_id %}" class="btn btn-success">Confirm Booking</a>
+                        <a href="javascript:history.back()" class="btn btn-primary">Go Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer class="text-white" style="background-color: #3f51b5; margin-top: 100px;">
+        <div class="container p-5">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5>About Us</h5>
+                    <p class="text-white">Bookie provides premier event management and booking services, ensuring your events are memorable and stress-free. From corporate functions to personal celebrations, we handle every detail with care and precision.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone mr-1"></i> +233 247 884320</li>
+                        <li><i class="fas fa-envelope mr-1"></i> info@bookie.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-1"></i> KNUST, Kumasi, Ghana</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <ul class="list-unstyled d-flex">
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                        <li class="mr-3"><a href="#" class="text-white"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center py-3">
+            <p class="mb-1" style="color: black;">© 2024 Bookie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>
