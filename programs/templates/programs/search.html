@@ -17,10 +17,11 @@
 {% endblock promo %}
 
 {% block content %}
-    <div class="container mt-4">
+    <div class="container mt-4 ft-fam">
 
         {% if results %}
         <h1 class="mb-4">Search Results for "{{ query }}"</h1>
+        <hr>
         <div class="container">
             {% for event in results %}
             {% if forloop.counter0|divisibleby:4 %}

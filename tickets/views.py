@@ -25,8 +25,8 @@ def add_ticket_view(request, event_id: str): # ADDING A TICKET TYPE
             ticket.event = event
 
             if TicketType.objects.filter(name=form.cleaned_data['name'], event=event):
-                    messages.error(request, f'Ticket with this name already exists')
-                    return redirect(reverse('add_ticket', args=[event.id]))
+                messages.error(request, f'Ticket with this name already exists')
+                return redirect(reverse('add_ticket', args=[event.id]))
                     
             if 'save' in request.POST:
                 ticket.save()
@@ -137,7 +137,6 @@ def payment_confirmation_view(request, ticket_id:str):
 
 
     payment_successful = verify_payment(ticket_id)
-    print(payment_successful)
 
     if payment_successful:
         qr = generate_qrcode(ticket_purchase.ticket_id)
