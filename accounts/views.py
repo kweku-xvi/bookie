@@ -76,7 +76,7 @@ def verify_user_view(request):
             user.is_verified = True
             user.save()
 
-            return HttpResponse('<h1>Email verified successfully</h1>')
+            return redirect('verification_complete')
         else:
             return HttpResponse('<h1>Email already verified</h1>')
     except jwt.ExpiredSignatureError:
@@ -372,3 +372,7 @@ def password_reset_confirm_view(request, uidb64, token):
         return render(request, 'accounts/password_reset_confirm.html', context)
     else:
         messages.error(request, 'The password reset link was invalid, possibly because it has already been used.')
+
+
+def verification_complete_view(request):
+    return render(request, 'accounts/verification_complete.html', {'title':'Email verified'})

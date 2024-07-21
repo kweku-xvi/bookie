@@ -1,0 +1,23 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="ft-fam">
+    <div class="container mt-5">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="mb-0">
+                    Email Verification Complete
+                </h1>
+                <hr>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        <p>Your account has been succesfully verified.</p>
+        <hr>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login Now</a>
+    </div>
+</div>
+{% endblock %}
