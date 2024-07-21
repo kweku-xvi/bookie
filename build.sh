@@ -11,5 +11,5 @@ python manage.py collectstatic --no-input
 # Apply any outstanding database migrations
 python manage.py migrate
 
-#Create superuser if one doesn't exist already
+# Create a superuser if one does not already exist
 python manage.py createsuper
