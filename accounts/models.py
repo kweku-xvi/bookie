@@ -22,7 +22,7 @@ class MyUserManager(BaseUserManager):
         extra_fields.setdefault("first_name", 'Super')
         extra_fields.setdefault("last_name", 'User')
         extra_fields.setdefault("username", 'kay')
-        extra_fields.setdefault("date_of_birth", '01-01-2000')
+        extra_fields.setdefault("date_of_birth", '2000-01-01')
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError(_("SuperUser must have is_staff=True"))
