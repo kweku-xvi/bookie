@@ -147,6 +147,8 @@ STATIC_URL = '/static/'
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # # Directory where collectstatic will collect static files for deployment
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
