@@ -86,20 +86,20 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default':dj_database_url.config(
-        default=os.getenv('database_url'),
-        conn_max_age=600
-    )
-}
-
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     'default':dj_database_url.config(
+#         default=os.getenv('database_url'),
+#         conn_max_age=600
+#     )
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -136,17 +136,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
-# Directory where collectstatic will collect static files for deployment
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Additional directories to collect static files from (if any)
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# # Directory where collectstatic will collect static files for deployment
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# # Additional directories to collect static files from (if any)
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
