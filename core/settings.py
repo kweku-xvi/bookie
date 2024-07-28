@@ -37,7 +37,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # CHANGE TO FALSE TO ADD CUSTOM 404
 #USE collectstatic to keep admin appearance
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
