@@ -1,5 +1,6 @@
 import uuid
 from accounts.models import User
+from cloudinary.models import CloudinaryField
 from django.db import models
 from PIL import Image
 
@@ -29,7 +30,7 @@ class Event(models.Model):
     event_date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    image = models.ImageField(default='default.jpg', upload_to='event_images')
+    image = CloudinaryField('image')
     is_active = models.BooleanField(default=False)
     organized_by = models.ForeignKey(User, on_delete=models.CASCADE)
     is_free = models.BooleanField(default=False)
