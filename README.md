@@ -11,7 +11,7 @@ Bookie is a powerful event management and ticketing system designed to simplify 
 
 ## Live Demo
 
-You can access the live demo of Bookie at [your-deployed-link.com](https://bookie-6j8m.onrender.com/).
+You can access the live demo of Bookie at [bookie.com](https://bookie-6j8m.onrender.com/).
 
 
 ## Getting Started
