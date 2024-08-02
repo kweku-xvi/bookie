@@ -40,3 +40,6 @@ To get started with Bookie, follow these steps:
 5. **Start Development Server**
     ```bash
     python manage.py runserver
+
+Open your browser and navigate to http://localhost:8000 to access the application.
+
